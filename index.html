@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet" href="./styles/desktop.css">
+    <link rel="stylesheet" href="./styles/notepad.css">
+    <link rel="stylesheet" href="./styles/footer.css">
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed&display=swap&subset=cyrillic-ext,latin-ext" rel="stylesheet">
+</head>
+<body>
+
+    <main>
+        <div class="notepad activeProg">
+            <div class="title">
+                <div class="left-programm-title">
+                    <img class="programm-icon" src="./icons/programm-icons/notepad.png" alt="logo">
+                    <span class="programm-title">aboutMe.txt — Notepad</span>
+                </div>
+                    
+                <div class="right-programm-title">
+                    <span class="programm-change-size semi-close">—</span>
+                    <img class="programm-change-size full-window" src="./icons/programm-icons/full-window.png" alt="full-window">
+                    <img class="programm-change-size close" src="./icons/programm-icons/close.png" alt="close">
+                </div>
+            </div>
+            <nav>
+                <span class="notepad-navigation-item">File</span>
+                <span class="notepad-navigation-item">Edit</span>
+                <span class="notepad-navigation-item">Format</span>
+                <span class="notepad-navigation-item">View</span>
+                <span class="notepad-navigation-item">HELP</span>
+            </nav>
+            <div class="notepad-text">
+
+            </div>
+        </div>
+        
+        <!-- <div class="folder">
+
+        </div>
+
+        <div class="browser">
+
+        </div>
+
+        <div class="settings">
+
+        </div>
+
+        <div class="bin">
+
+        </div> -->
+
+        <div class="desktop-wrapper">
+            <div class="desktop-item bin">
+                <img class="bin" src="./icons/desktop-icons/bin.png" alt="Bin">
+                <span class="file-name">Корзина</span>
+            </div>
+
+            <div class="desktop-item folder">
+                <img class="folder" src="./icons/desktop-icons/folder.png" alt="Folder">
+                <span class="file-name">Новая папка</span>
+            </div>
+
+            <div class="desktop-item folder">
+                <img class="folder" src="./icons/desktop-icons/folder.png" alt="Folder">
+                <span class="file-name">Новая папка</span>
+            </div>
+
+            <div class="desktop-item txt">
+                <img class="txt" src="./icons/desktop-icons/txt.png" alt="Txt-file">
+                <span class="file-name">aboutMe.txt</span>
+            </div>
+
+            <div class="desktop-item shortcut">
+                <img class="shortcut" src="./icons/desktop-icons/txt.png" alt="shortcut">
+                <span class="file-name">Имя ярлыка</span>
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <footer>
+        <section class="left-side-footer">
+
+            <div class="task-panel-programm">
+                <img class="programm-icon win" src="./icons/left-panel/win/win-white.png" alt="Win">
+            </div>
+            <div class="task-panel-programm">
+                <img class="programm-icon search" src="./icons/left-panel/search/search.png" alt="Search">
+            </div>
+            <div class="task-panel-programm">
+                <img class="programm-icon explorer" src="./icons/left-panel/explorer/explorer.png" alt="Explorer">
+            </div>
+
+        </section>
+
+        <section class="right-side-footer">
+
+            <div class="tray-panel-empty-block">
+
+            </div>
+
+            <div class="tray-panel-programm">
+                <img class="programm-icon" src="./icons/right-panel/messages/messages.png" alt="Messages">
+            </div>
+
+            <div class="tray-panel-programm time">
+                <span class="time"></span>
+                <span class="date"></span>
+            </div>
+
+            <div class="tray-panel-programm">
+                <span class="current-language">ENG</span>
+            </div><div class="tray-panel-programm">
+                <img class="programm-icon volume" src="./icons/right-panel/volume/volume-max.png" alt="Volume">
+            </div>
+
+        </section>
+       
+    </footer>
+     <script>
+        
+
+        // function fullScreen(element) {
+        //     if (element.requestFullscreen) {
+        //         element.requestFullscreen();
+        //         console.log(1);
+        //     }
+        //     else if (element.webkitrequestFullscreen) 
+        //     {
+        //         element.webkitRequestFullscreen();
+        //         console.log(2);
+        //     }
+        //     else if (element.mozRequestFullscreen) 
+        //     {
+        //         element.mozRequestFullScreen();
+        //         console.log(3);
+        //     }
+        // }
+
+        // //для всей страницы
+        // let html = document.documentElement;
+        // fullScreen(html);
+    </script>
+    <script src="./my.js"></script>
+</body>
+</html>

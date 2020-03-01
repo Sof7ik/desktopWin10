@@ -1,0 +1,85 @@
+div.notepad
+{
+    width: 1000px;
+    height: 800px;
+    background-color: #fff;
+
+    position: absolute;
+    top: 7%;
+    left: 14%;
+
+    opacity: 0;
+    transition: all .4s;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-self: flex-start;
+    /* margin-left: -99999px; */
+}
+
+div.title
+{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 5px 7px;
+    color: #000;
+
+    cursor: default;
+}
+
+div.left-programm-title, div.right-programm-title
+{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+span.programm-title 
+{
+    font-size: 13px;
+    margin-left: 5px;
+}
+
+nav
+{
+    font-size: 13px;
+    border-bottom: 1px solid rgba(199, 199, 199, 0.63);
+    cursor: default;
+}
+
+nav span.notepad-navigation-item
+{
+    /* padding: 3px 7px; */
+    padding: 0px 7px;
+}
+
+nav span.notepad-navigation-item:hover
+{
+    background-color: rgba(147, 216, 255, 0.76);
+}
+
+.programm-change-size 
+{
+    margin-right: 10px;
+    height: 100%;
+    padding: 4px;
+}
+
+.programm-change-size:hover
+{
+    background-color: rgba(143, 143, 143, 0.4);
+}
+
+.right-programm-title .programm-change-size:last-child
+{
+    margin-right: 0;
+}
+
+img.programm-change-size
+{
+    width: 20px;
+}
