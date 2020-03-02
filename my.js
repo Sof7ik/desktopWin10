@@ -1,32 +1,46 @@
 let date, hours, minutes, seconds, day, month; //переменные времени
 let target, activeitems;
+let aboutMeValue;
+let notepad, folder, browser;
+let a;
+
+const mainElement = document.querySelector('main');
 
 //открытие разных программ
 const openTxtFile = () => {
-    console.log('From function:', "Txt file opened");
-    // <div class="notepad activeProg">
-    //     <div class="title">
-    //         <div class="left-programm-title">
-    //             <img class="programm-icon" src="./icons/programm-icons/notepad.png" alt="icon">
-    //             <span class="programm-title">aboutMe.txt — Notepad</span>
-    //         </div>
-            
-    //         <div class="right-programm-title">
-    //             <span class="programm-change-size semi-close">—</span>
-    //             <img class="programm-change-size full-window" src="./icons/programm-icons/full-window.png" alt="full-window">
-    //             <img class="programm-change-size close" src="./icons/programm-icons/close.png" alt="close">
-    //         </div>
-    //     </div>
-    //     <nav>
-    //         <span class="notepad-navigation-item">File</span>
-    //         <span class="notepad-navigation-item">Edit</span>
-    //         <span class="notepad-navigation-item">Format</span>
-    //         <span class="notepad-navigation-item">View</span>
-    //         <span class="notepad-navigation-item">HELP</span>
-    //     </nav>
-    // </div>
-    document.querySelector('div.notepad').style.opacity = 1;
+    aboutMeValue = `Привет, я учусь в Щелковской шараге на 3 курсе на web-разраба. Вроде как фулл стэк, но даже код для этого проекта я Ctrl+C — Ctrl+V...`
+
+    notepad = document.createElement('div');
+    notepad.classList.add('notepad', 'activeProg');
+    notepad.innerHTML = `
+    <div class="title">
+        <div class="left-programm-title">
+            <img class="programm-icon" src="./icons/programm-icons/notepad.png" alt="icon">
+            <span class="programm-title">aboutMe.txt — Notepad</span>
+        </div>
+    
+        <div class="right-programm-title">
+            <span class="programm-change-size semi-close">—</span>
+            <img class="programm-change-size full-window" src="./icons/programm-icons/full-window.png" alt="full-window">
+            <img class="programm-change-size close" src="./icons/programm-icons/close.png" alt="close">
+        </div>
+    </div>
+    <nav>
+        <span class="notepad-navigation-item">File</span>
+        <span class="notepad-navigation-item">Edit</span>
+        <span class="notepad-navigation-item">Format</span>
+        <span class="notepad-navigation-item">View</span>
+        <span class="notepad-navigation-item">HELP</span>
+    </nav>
+    <div class="notepad-text">
+        <textarea name="notepad-message" id="" class="notepad-textarea" resize>${aboutMeValue}</textarea>
+    </div>
+    `
+    mainElement.prepend(notepad);
+    notepad.style.opacity = 1;
+    dragElement(document.querySelector("div.notepad"));
     clearActiveElements();
+    document.querySelector('img.close').addEventListener('click', closeProgramm)
 }
 
 const openFolder = () => {
@@ -47,6 +61,7 @@ const openBin = () => {
 //закрытие программы
 const closeProgramm = () => {
     document.querySelector('div.activeProg').style.opacity = 0;
+    document.querySelector('div.activeProg').remove();
 }
 
 //убираем выделение с файла
@@ -76,12 +91,11 @@ const checkFileTypeOnDBLClick = (event) => {
     target = event.target.parentElement;
 
     if (target.classList.contains('bin')) {
-        console.log('txt');
+        console.log('bin');
         openBin();
     }
 
     if (target.classList.contains('txt')) {
-        console.log('txt');
         openTxtFile();
     }
 
@@ -94,27 +108,46 @@ const checkFileTypeOnDBLClick = (event) => {
         console.log('shortcut');
         openBrowser();
     }
+}
 
-    // switch (target.className) {
-    //     case 'txt':
-    //         console.log('txt');
-    //         openTxtFile();
-    //         break;
-
-    //     case 'folder':
-    //         console.log('folder');
-    //         openFolder();
-    //         break;
-
-    //     case 'shortcut':
-    //         console.log('shortcut');
-    //         openBrowser();
-    //         break;
-
-    //     default:
-    //         console.log("Untyped file");
-    //         break;
-    // } 
+//создаем передвижение программ
+function dragElement(elmnt) {
+    var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    if (document.querySelector('div.left-programm-title')) {
+      /* if present, the header is where you move the DIV from:*/
+      document.querySelector('div.left-programm-title').onmousedown = dragMouseDown;
+    } else {
+      /* otherwise, move the DIV from anywhere inside the DIV:*/
+      elmnt.onmousedown = dragMouseDown;
+    }
+  
+    function dragMouseDown(e) {
+      e = e || window.event;
+      // get the mouse cursor position at startup:
+      pos3 = e.clientX;
+      pos4 = e.clientY;
+      document.onmouseup = closeDragElement;
+      // call a function whenever the cursor moves:
+      document.onmousemove = elementDrag;
+    }
+  
+    function elementDrag(e) {
+      e = e || window.event;
+      // calculate the new cursor position:
+      pos1 = pos3 - e.clientX;
+      pos2 = pos4 - e.clientY;
+      pos3 = e.clientX;
+      pos4 = e.clientY;
+      // set the element's new position:
+      elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+      elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+    }
+  
+    function closeDragElement() {
+      /* stop moving when mouse button is released:*/
+      document.onmouseup = null;
+      document.onmousemove = null;
+    }
 }
 
 //подмена картинок "Пуск"
@@ -157,4 +190,3 @@ setInterval(() =>{
 setDate();
 document.querySelector('main').addEventListener('click', makeFileActive);
 document.querySelector('main').addEventListener('dblclick', checkFileTypeOnDBLClick);
-document.querySelector('img.close').addEventListener('click', closeProgramm)
