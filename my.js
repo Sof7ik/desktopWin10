@@ -8,7 +8,7 @@ const mainElement = document.querySelector('main');
 
 //открытие разных программ
 const openTxtFile = () => {
-    aboutMeValue = `Привет, я учусь в Щелковской шараге на 3 курсе на web-разраба. Вроде как фулл стэк, но даже код для этого проекта я Ctrl+C — Ctrl+V...`
+    aboutMeValue = `Привет, я учусь в Щелковской шараге на 3 курсе на web-разраба. Вроде как фулл стэк, но даже код для этого проекта я частично Ctrl+C — Ctrl+V...`
 
     notepad = document.createElement('div');
     notepad.classList.add('notepad', 'activeProg');

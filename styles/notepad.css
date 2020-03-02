@@ -108,4 +108,5 @@ textarea.notepad-textarea
     border: none;
     resize: none;
     padding: 0 4px;
+    outline: none;
 }
