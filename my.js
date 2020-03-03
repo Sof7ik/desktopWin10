@@ -394,3 +394,4 @@ setInterval(() =>{
 setDate();
 document.querySelector('main').addEventListener('click', makeFileActive);
 document.querySelector('main').addEventListener('dblclick', checkFileTypeOnDBLClick);
+swapWinLogo();
