@@ -261,9 +261,8 @@ const openBin = () => {
 }
 
 //закрытие программы
-const closeProgramm = () => {
-    document.querySelector('div.activeProg').style.opacity = 0;
-    document.querySelector('div.activeProg').remove();
+const closeProgramm = (event) => {
+    event.target.parentElement.parentElement.parentElement.remove();
 }
 
 //убираем выделение с файла
