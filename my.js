@@ -2,9 +2,20 @@ let date, hours, minutes, seconds, day, month; //переменные време
 let target, activeitems;
 let aboutMeValue;
 let notepad, folder, browser;
-let a;
+
+let zIndex = 2;
 
 const mainElement = document.querySelector('main');
+
+//подмена картинок в проводнике
+const swapExplorerArrows = () => {
+    document.querySelector('img.left-arrow').addEventListener('mouseover', (event) => {
+        document.querySelector('img.left-arrow').setAttribute('src', './icons/programm-icons/to-arrow blue.png');
+    })
+    document.querySelector('img.left-arrow').addEventListener('mouseout', (event) => {
+        document.querySelector('img.left-arrow').setAttribute('src', './icons/programm-icons/to-arrow white.png');
+    })
+}
 
 //открытие разных программ
 const openTxtFile = () => {
@@ -12,6 +23,8 @@ const openTxtFile = () => {
 
     notepad = document.createElement('div');
     notepad.classList.add('notepad', 'activeProg');
+    notepad.style.zIndex = zIndex;
+    zIndex++;
     notepad.innerHTML = `
     <div class="title">
         <div class="left-programm-title">
@@ -25,7 +38,7 @@ const openTxtFile = () => {
             <img class="programm-change-size close" src="./icons/programm-icons/close.png" alt="close">
         </div>
     </div>
-    <nav>
+    <nav class="notepad-nav">
         <span class="notepad-navigation-item">File</span>
         <span class="notepad-navigation-item">Edit</span>
         <span class="notepad-navigation-item">Format</span>
@@ -40,12 +53,201 @@ const openTxtFile = () => {
     notepad.style.opacity = 1;
     dragElement(document.querySelector("div.notepad"));
     clearActiveElements();
-    document.querySelector('img.close').addEventListener('click', closeProgramm)
+    document.querySelector('img.close').addEventListener('click', closeProgramm);
 }
 
 const openFolder = () => {
-    console.log('From function:', "Folder opened");
+    explorer = document.createElement('div');
+    explorer.classList.add('explorer', 'activeProg');
+    explorer.style.zIndex = zIndex;
+    zIndex++;
+    explorer.innerHTML =
+    `
+    <div class="explorer-title">
+                <div class="left-programm-title left-explorer-title">
+                    <img class="explorer-icon" src="./icons/programm-icons/explorer.png" alt="logo">
+                    <span class="explorer-title">Explorer</span>
+                </div>
+                    
+                <div class="right-programm-title right-explorer-title">
+                    <span class="programm-change-size semi-close">—</span>
+                    <img class="programm-change-size full-window" src="./icons/programm-icons/full-window.png" alt="full-window">
+                    <img class="programm-change-size close" src="./icons/programm-icons/close.png" alt="close">
+                </div>
+            </div>
+            <nav>
+                <a class="explorer-navigation-item active-explorer-navigation-item">File</a>
+                <a class="explorer-navigation-item">Main</a>
+                <a class="explorer-navigation-item">Share</a>
+                <a class="explorer-navigation-item">View</a>
+            </nav>
+            <div class="search">
+                <div class="arrows">
+                    <img src="./icons/programm-icons/to-arrow.png" alt="left arrow" class="left-arrow search-arrow">
+                    <img src="./icons/programm-icons/to-arrow.png" alt="right arrow" class="right-arrow search-arrow">
+                    <img src="./icons/programm-icons/to-arrow white.png" alt="up arrow" class="up-arrow search-arrow">
+                </div>
+                <input type="text" name="main-search" class="main-search-input">
+                <input type="text" name="second-search" class="second-search-input" placeholder="Search: Desktop">
+            </div>
+
+            <div class="main-content">
+                <aside class="left-list">
+                    <ul>
+                        <li class="list">Desktop
+                            <ul class="inner-ul">
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                            </ul>
+                        </li>
+                        <li class="list">Desktop
+                            <ul class="inner-ul">
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                            </ul>
+                        </li>
+                        <li class="list">Desktop
+                            <ul class="inner-ul">
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                            </ul>
+                        </li>
+                        <li class="list">Desktop
+                            <ul class="inner-ul">
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                                <li class="list">Быстрый доступ</li>
+                            </ul>
+                        </li>
+                        
+                    </ul>
+                </aside>
+                <section class="explorer-content-wrapper">
+                    <div class="desktop-item bin">
+                        <img class="bin" src="./icons/desktop-icons/bin.png" alt="Bin">
+                        <span class="file-name">Корзина</span>
+                    </div>
+        
+                    <div class="desktop-item folder">
+                        <img class="folder" src="./icons/desktop-icons/folder.png" alt="Folder">
+                        <span class="file-name">Новая папка</span>
+                    </div>
+        
+                    <div class="desktop-item folder">
+                        <img class="folder" src="./icons/desktop-icons/folder.png" alt="Folder">
+                        <span class="file-name">Новая папка</span>
+                    </div>
+        
+                    <div class="desktop-item txt">
+                        <img class="txt" src="./icons/desktop-icons/txt.png" alt="Txt-file">
+                        <span class="file-name">aboutMe.txt</span>
+                    </div>
+        
+                    <div class="desktop-item shortcut">
+                        <img class="shortcut" src="./icons/desktop-icons/txt.png" alt="shortcut">
+                        <span class="file-name">Имя ярлыка</span>
+                    </div>
+                    <div class="desktop-item bin">
+                        <img class="bin" src="./icons/desktop-icons/bin.png" alt="Bin">
+                        <span class="file-name">Корзина</span>
+                    </div>
+        
+                    <div class="desktop-item folder">
+                        <img class="folder" src="./icons/desktop-icons/folder.png" alt="Folder">
+                        <span class="file-name">Новая папка</span>
+                    </div>
+        
+                    <div class="desktop-item folder">
+                        <img class="folder" src="./icons/desktop-icons/folder.png" alt="Folder">
+                        <span class="file-name">Новая папка</span>
+                    </div>
+
+                    <div class="desktop-item shortcut">
+                        <img class="shortcut" src="./icons/desktop-icons/txt.png" alt="shortcut">
+                        <span class="file-name">Имя ярлыка</span>
+                    </div>
+                    <div class="desktop-item bin">
+                        <img class="bin" src="./icons/desktop-icons/bin.png" alt="Bin">
+                        <span class="file-name">Корзина</span>
+                    </div>
+        
+                    <div class="desktop-item folder">
+                        <img class="folder" src="./icons/desktop-icons/folder.png" alt="Folder">
+                        <span class="file-name">Новая папка</span>
+                    </div>
+        
+                    <div class="desktop-item folder">
+                        <img class="folder" src="./icons/desktop-icons/folder.png" alt="Folder">
+                        <span class="file-name">Новая папка</span>
+                    </div>
+
+                    <div class="desktop-item shortcut">
+                        <img class="shortcut" src="./icons/desktop-icons/txt.png" alt="shortcut">
+                        <span class="file-name">Имя ярлыка</span>
+                    </div>
+                    <div class="desktop-item bin">
+                        <img class="bin" src="./icons/desktop-icons/bin.png" alt="Bin">
+                        <span class="file-name">Корзина</span>
+                    </div>
+        
+                    <div class="desktop-item folder">
+                        <img class="folder" src="./icons/desktop-icons/folder.png" alt="Folder">
+                        <span class="file-name">Новая папка</span>
+                    </div>
+        
+                    <div class="desktop-item folder">
+                        <img class="folder" src="./icons/desktop-icons/folder.png" alt="Folder">
+                        <span class="file-name">Новая папка</span>
+                    </div>
+
+                </section>
+            </div>
+
+            <div class="explorer-footer">
+                <p class="explorer-footer-element-count">Элементов: 29</p>
+            </div>
+    `
+    mainElement.prepend(explorer);
+    explorer.style.opacity = 1;
+    swapExplorerArrows();
+    dragElement(document.querySelector("div.explorer"));
     clearActiveElements();
+    document.querySelector('img.close').addEventListener('click', closeProgramm);
 }
 
 const openBrowser = () => {
@@ -151,12 +353,14 @@ function dragElement(elmnt) {
 }
 
 //подмена картинок "Пуск"
-document.querySelector('div.task-panel-programm').addEventListener('mouseover', (event) => {
-    document.querySelector('img.win').setAttribute('src', './icons/left-panel/win/win-blue.png');
-})
-document.querySelector('div.task-panel-programm').addEventListener('mouseout', (event) => {
-    document.querySelector('img.win').setAttribute('src', './icons/left-panel/win/win-white.png');
-})
+const swapWinLogo = () => {
+    document.querySelector('div.task-panel-programm').addEventListener('mouseover', (event) => {
+        document.querySelector('img.win').setAttribute('src', './icons/left-panel/win/win-blue.png');
+    })
+    document.querySelector('div.task-panel-programm').addEventListener('mouseout', (event) => {
+        document.querySelector('img.win').setAttribute('src', './icons/left-panel/win/win-white.png');
+    })
+}
 
 //функция получения и вывода времени
 const setDate = () => {

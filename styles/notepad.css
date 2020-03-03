@@ -29,8 +29,7 @@ div.title
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
-
-    padding: 5px 7px;
+    
     color: #000;
 
     cursor: default;
@@ -56,20 +55,20 @@ span.programm-title
     margin-left: 5px;
 }
 
-nav
+nav.notepad-nav
 {
     font-size: 13px;
     border-bottom: 1px solid rgba(199, 199, 199, 0.63);
     cursor: default;
 }
 
-nav span.notepad-navigation-item
+nav.notepad-nav span.notepad-navigation-item
 {
     /* padding: 3px 7px; */
     padding: 0px 7px;
 }
 
-nav span.notepad-navigation-item:hover
+nav.notepad-nav span.notepad-navigation-item:hover
 {
     background-color: rgba(147, 216, 255, 0.76);
 }
@@ -79,11 +78,14 @@ nav span.notepad-navigation-item:hover
     margin-right: 10px;
     height: 100%;
     padding: 4px;
+    transition: all .2s;
 }
 
 .programm-change-size:hover
 {
     background-color: rgba(143, 143, 143, 0.4);
+    color: #fff;
+    transition: all .2s;
 }
 
 .right-programm-title .programm-change-size:last-child
