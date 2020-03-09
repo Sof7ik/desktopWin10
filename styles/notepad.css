@@ -35,13 +35,13 @@ div.title
     cursor: default;
 }
 
-div.left-programm-title, div.right-programm-title
+/* div.left-programm-title, div.right-programm-title
 {
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
-}
+} */
 
 div.left-programm-title
 {

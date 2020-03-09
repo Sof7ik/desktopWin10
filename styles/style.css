@@ -17,3 +17,11 @@ ul
 {
     list-style-type: none;
 }
+
+div.left-programm-title, div.right-programm-title
+{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+}

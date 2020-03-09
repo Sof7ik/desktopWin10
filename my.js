@@ -2,7 +2,7 @@ let date, hours, minutes, seconds, day, month; //переменные време
 let target, activeitems;
 let aboutMeValue;
 let notepad, folder, browser;
-
+let fileName;
 let zIndex = 2;
 
 const mainElement = document.querySelector('main');
@@ -18,7 +18,7 @@ const swapExplorerArrows = () => {
 }
 
 //открытие разных программ
-const openTxtFile = () => {
+const openTxtFile = (fileName) => {
     aboutMeValue = `Привет, я учусь в Щелковской шараге на 3 курсе на web-разраба. Вроде как фулл стэк, но даже код для этого проекта я частично Ctrl+C — Ctrl+V...`
 
     notepad = document.createElement('div');
@@ -29,7 +29,7 @@ const openTxtFile = () => {
     <div class="title">
         <div class="left-programm-title">
             <img class="programm-icon" src="./icons/programm-icons/notepad.png" alt="icon">
-            <span class="programm-title">aboutMe.txt — Notepad</span>
+            <span class="programm-title">${fileName} — Notepad</span>
         </div>
     
         <div class="right-programm-title">
@@ -46,7 +46,7 @@ const openTxtFile = () => {
         <span class="notepad-navigation-item">HELP</span>
     </nav>
     <div class="notepad-text">
-        <textarea name="notepad-message" id="" class="notepad-textarea" resize>${aboutMeValue}</textarea>
+        <textarea name="notepad-message" id="" class="notepad-textarea" resize readonly>${aboutMeValue}</textarea>
     </div>
     `
     mainElement.prepend(notepad);
@@ -56,7 +56,7 @@ const openTxtFile = () => {
     document.querySelector('img.close').addEventListener('click', closeProgramm);
 }
 
-const openFolder = () => {
+const openFolder = (fileName) => {
     explorer = document.createElement('div');
     explorer.classList.add('explorer', 'activeProg');
     explorer.style.zIndex = zIndex;
@@ -66,7 +66,7 @@ const openFolder = () => {
     <div class="explorer-title">
                 <div class="left-programm-title left-explorer-title">
                     <img class="explorer-icon" src="./icons/programm-icons/explorer.png" alt="logo">
-                    <span class="explorer-title">Explorer</span>
+                    <span class="explorer-title">${fileName}</span>
                 </div>
                     
                 <div class="right-programm-title right-explorer-title">
@@ -250,10 +250,15 @@ const openFolder = () => {
     document.querySelector('img.close').addEventListener('click', closeProgramm);
 }
 
-const openBrowser = () => {
-    console.log('From function:', "Google opened");
-    clearActiveElements();
-}
+// const openBrowser = () => {
+//     browser = document.createElement('div');
+//     browser.classList.add('browser');
+//     mainElement.prepend(browser);
+//     browser.style.opacity = 1;
+//     dragElement(document.querySelector("div.browser"));
+//     clearActiveElements();
+//     document.querySelector('img.close').addEventListener('click', closeProgramm);
+// }
 
 const openBin = () => {
     console.log('From function:', "Bin opened");
@@ -290,24 +295,25 @@ const makeFileActive = (event) => {
 //проверяем, на что кликнули - ярлык, папка, текстовый документ
 const checkFileTypeOnDBLClick = (event) => {
     target = event.target.parentElement;
-
+    console.log(target.lastElementChild);
+    fileName = target.lastElementChild.textContent;
     if (target.classList.contains('bin')) {
         console.log('bin');
-        openBin();
+        openBin(fileName);
     }
 
     if (target.classList.contains('txt')) {
-        openTxtFile();
+        openTxtFile(fileName);
     }
 
     if (target.classList.contains('folder')) {
         console.log('folder');
-        openFolder();
+        openFolder(fileName);
     }
 
     if (target.classList.contains('shortcut')) {
         console.log('shortcut');
-        openBrowser();
+        openBrowser(fileName);
     }
 }
 
