@@ -87,7 +87,7 @@ const openFolder = (fileName) => {
                     <img src="./icons/programm-icons/to-arrow.png" alt="right arrow" class="right-arrow search-arrow">
                     <img src="./icons/programm-icons/to-arrow white.png" alt="up arrow" class="up-arrow search-arrow">
                 </div>
-                <input type="text" name="main-search" class="main-search-input">
+                <input type="text" name="search" class="main-search-input">
                 <input type="text" name="second-search" class="second-search-input" placeholder="Search: Desktop">
             </div>
 
@@ -250,15 +250,53 @@ const openFolder = (fileName) => {
     document.querySelector('img.close').addEventListener('click', closeProgramm);
 }
 
-// const openBrowser = () => {
-//     browser = document.createElement('div');
-//     browser.classList.add('browser');
-//     mainElement.prepend(browser);
-//     browser.style.opacity = 1;
-//     dragElement(document.querySelector("div.browser"));
-//     clearActiveElements();
-//     document.querySelector('img.close').addEventListener('click', closeProgramm);
-// }
+const openBrowser = () => {
+    browser = document.createElement('div');
+    browser.classList.add('browser');
+    mainElement.prepend(browser);
+    browser.innerHTML = 
+    `
+    <div class="browser-title">
+                <div class="left-programm-title left-browser-title">
+                    <div class="browser-tab">
+                        <p class="tab-name">Новая вкладка</p>
+                    </div>
+                </div>
+                    
+                <div class="right-programm-title right-browser-title">
+                    <span class="programm-change-size semi-close">—</span>
+                    <img class="programm-change-size full-window" src="./icons/programm-icons/full-window.png" alt="full-window">
+                    <img class="programm-change-size close" src="./icons/programm-icons/close.png" alt="close">
+                </div>
+            </div>
+            <div class="browser-navigate">
+                <div class="buttons">
+                    <img src="./icons/programm-icons/to-arrow.png" alt="left arrow" class="left-arrow search-arrow">
+                    <img src="./icons/programm-icons/to-arrow.png" alt="right arrow" class="right-arrow search-arrow">
+                    <img src="./icons/programm-icons/redo.png" alt="redo" class="up-arrow search-arrow">
+                </div>
+                <div class="browser-search">
+                    <input type="text" name="" class="browser-search" placeholder="Введите поисковой запрос в Google или укажите URL">
+                </div>
+                <div class="addons">
+                    <div class="addon" data-addon-id="1"></div>
+                    <div class="addon" data-addon-id="2"></div>
+                    <div class="addon" data-addon-id="3"></div>
+                    <div class="addon" data-addon-id="4"></div>
+                </div>
+            </div>
+            <div class="main">
+                <iframe src="https://learn.javascript.ru/dom-navigation#deti-childnodes-firstchild-lastchild" class="browser-iframe"></iframe>
+            </div>
+            <div class="browser-footer">
+                <p>Привет я хром</p>
+            </div>
+    `
+    browser.style.opacity = 1;
+    dragElement(document.querySelector("div.browser"));
+    clearActiveElements();
+    document.querySelector('img.close').addEventListener('click', closeProgramm);
+}
 
 const openBin = () => {
     console.log('From function:', "Bin opened");
