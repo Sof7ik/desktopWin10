@@ -1,7 +1,7 @@
 let date, hours, minutes, seconds, day, month; //переменные времени
 let target, activeitems;
 let aboutMeValue;
-let notepad, folder, browser;
+let notepad, folder, browser, portal;
 let fileName;
 let zIndex = 2;
 
@@ -77,7 +77,7 @@ const openFolder = (fileName) => {
             </div>
             <nav>
                 <a class="explorer-navigation-item active-explorer-navigation-item">File</a>
-                <a class="explorer-navigation-item">Main</a>
+                <a class="explorer-navigation-item">Home</a>
                 <a class="explorer-navigation-item">Share</a>
                 <a class="explorer-navigation-item">View</a>
             </nav>
@@ -108,64 +108,13 @@ const openFolder = (fileName) => {
                                 <li class="list">Быстрый доступ</li>
                                 <li class="list">Быстрый доступ</li>
                             </ul>
-                        </li>
-                        <li class="list">Desktop
-                            <ul class="inner-ul">
-                                <li class="list">Быстрый доступ</li>
-                                <li class="list">Быстрый доступ</li>
-                                <li class="list">Быстрый доступ</li>
-                                <li class="list">Быстрый доступ</li>
-                                <li class="list">Быстрый доступ</li>
-                                <li class="list">Быстрый доступ</li>
-                                <li class="list">Быстрый доступ</li>
-                                <li class="list">Быстрый доступ</li>
-                                <li class="list">Быстрый доступ</li>
-                                <li class="list">Быстрый доступ</li>
-                                <li class="list">Быстрый доступ</li>
-                            </ul>
-                        </li>
-                        <li class="list">Desktop
-                            <ul class="inner-ul">
-                                <li class="list">Быстрый доступ</li>
-                                <li class="list">Быстрый доступ</li>
-                                <li class="list">Быстрый доступ</li>
-                                <li class="list">Быстрый доступ</li>
-                                <li class="list">Быстрый доступ</li>
-                                <li class="list">Быстрый доступ</li>
-                                <li class="list">Быстрый доступ</li>
-                                <li class="list">Быстрый доступ</li>
-                                <li class="list">Быстрый доступ</li>
-                                <li class="list">Быстрый доступ</li>
-                                <li class="list">Быстрый доступ</li>
-                            </ul>
-                        </li>
-                        <li class="list">Desktop
-                            <ul class="inner-ul">
-                                <li class="list">Быстрый доступ</li>
-                                <li class="list">Быстрый доступ</li>
-                                <li class="list">Быстрый доступ</li>
-                                <li class="list">Быстрый доступ</li>
-                                <li class="list">Быстрый доступ</li>
-                                <li class="list">Быстрый доступ</li>
-                                <li class="list">Быстрый доступ</li>
-                                <li class="list">Быстрый доступ</li>
-                                <li class="list">Быстрый доступ</li>
-                                <li class="list">Быстрый доступ</li>
-                                <li class="list">Быстрый доступ</li>
-                            </ul>
-                        </li>
-                        
+                        </li>        
                     </ul>
                 </aside>
                 <section class="explorer-content-wrapper">
                     <div class="desktop-item bin">
                         <img class="bin" src="./icons/desktop-icons/bin.png" alt="Bin">
                         <span class="file-name">Корзина</span>
-                    </div>
-        
-                    <div class="desktop-item folder">
-                        <img class="folder" src="./icons/desktop-icons/folder.png" alt="Folder">
-                        <span class="file-name">Новая папка</span>
                     </div>
         
                     <div class="desktop-item folder">
@@ -182,59 +131,6 @@ const openFolder = (fileName) => {
                         <img class="shortcut" src="./icons/desktop-icons/txt.png" alt="shortcut">
                         <span class="file-name">Имя ярлыка</span>
                     </div>
-                    <div class="desktop-item bin">
-                        <img class="bin" src="./icons/desktop-icons/bin.png" alt="Bin">
-                        <span class="file-name">Корзина</span>
-                    </div>
-        
-                    <div class="desktop-item folder">
-                        <img class="folder" src="./icons/desktop-icons/folder.png" alt="Folder">
-                        <span class="file-name">Новая папка</span>
-                    </div>
-        
-                    <div class="desktop-item folder">
-                        <img class="folder" src="./icons/desktop-icons/folder.png" alt="Folder">
-                        <span class="file-name">Новая папка</span>
-                    </div>
-
-                    <div class="desktop-item shortcut">
-                        <img class="shortcut" src="./icons/desktop-icons/txt.png" alt="shortcut">
-                        <span class="file-name">Имя ярлыка</span>
-                    </div>
-                    <div class="desktop-item bin">
-                        <img class="bin" src="./icons/desktop-icons/bin.png" alt="Bin">
-                        <span class="file-name">Корзина</span>
-                    </div>
-        
-                    <div class="desktop-item folder">
-                        <img class="folder" src="./icons/desktop-icons/folder.png" alt="Folder">
-                        <span class="file-name">Новая папка</span>
-                    </div>
-        
-                    <div class="desktop-item folder">
-                        <img class="folder" src="./icons/desktop-icons/folder.png" alt="Folder">
-                        <span class="file-name">Новая папка</span>
-                    </div>
-
-                    <div class="desktop-item shortcut">
-                        <img class="shortcut" src="./icons/desktop-icons/txt.png" alt="shortcut">
-                        <span class="file-name">Имя ярлыка</span>
-                    </div>
-                    <div class="desktop-item bin">
-                        <img class="bin" src="./icons/desktop-icons/bin.png" alt="Bin">
-                        <span class="file-name">Корзина</span>
-                    </div>
-        
-                    <div class="desktop-item folder">
-                        <img class="folder" src="./icons/desktop-icons/folder.png" alt="Folder">
-                        <span class="file-name">Новая папка</span>
-                    </div>
-        
-                    <div class="desktop-item folder">
-                        <img class="folder" src="./icons/desktop-icons/folder.png" alt="Folder">
-                        <span class="file-name">Новая папка</span>
-                    </div>
-
                 </section>
             </div>
 
@@ -253,7 +149,6 @@ const openFolder = (fileName) => {
 const openBrowser = () => {
     browser = document.createElement('div');
     browser.classList.add('browser');
-    mainElement.prepend(browser);
     browser.innerHTML = 
     `
     <div class="browser-title">
@@ -286,13 +181,13 @@ const openBrowser = () => {
                 </div>
             </div>
             <div class="main">
-                <iframe src="https://learn.javascript.ru/dom-navigation#deti-childnodes-firstchild-lastchild" class="browser-iframe"></iframe>
+                <iframe src="https://learn.javascript.ru/" class="browser-iframe"></iframe>
             </div>
             <div class="browser-footer">
                 <p>Привет я хром</p>
             </div>
     `
-    browser.style.opacity = 1;
+    mainElement.prepend(browser);
     dragElement(document.querySelector("div.browser"));
     clearActiveElements();
     document.querySelector('img.close').addEventListener('click', closeProgramm);
@@ -333,7 +228,7 @@ const makeFileActive = (event) => {
 //проверяем, на что кликнули - ярлык, папка, текстовый документ
 const checkFileTypeOnDBLClick = (event) => {
     target = event.target.parentElement;
-    console.log(target.lastElementChild);
+    //console.log(target.lastElementChild);
     fileName = target.lastElementChild.textContent;
     if (target.classList.contains('bin')) {
         console.log('bin');
@@ -345,12 +240,10 @@ const checkFileTypeOnDBLClick = (event) => {
     }
 
     if (target.classList.contains('folder')) {
-        console.log('folder');
         openFolder(fileName);
     }
 
     if (target.classList.contains('shortcut')) {
-        console.log('shortcut');
         openBrowser(fileName);
     }
 }
