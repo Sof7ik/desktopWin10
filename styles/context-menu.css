@@ -1,0 +1,74 @@
+div.context-menu
+{
+    background-color: #2b2b2b;
+    position: absolute;
+    border: 1px solid #fff;
+    min-width: 300px;
+
+    padding: 5px 0px;
+}
+
+ul.context-menu 
+{
+    border-bottom: 1px solid #fff;
+    padding: 5px 0px;
+}
+
+ul.third
+{
+    margin-bottom: 5px;
+}
+
+ul.second li p 
+{
+    color: #616161;
+}
+
+div.context-menu p
+{
+    color: #fff;
+    transition: all .1s;
+    padding: 2px 0px 2px 25px;
+    cursor: default;
+    position: relative;
+}
+
+div.context-menu p::before, div.context-menu p::after
+{
+    position: absolute;
+    display: inline-block;
+
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+}
+
+div.context-menu p:hover
+{
+    background-color: #414141;
+}
+
+p.view::after, p.sort::after, p.new::after
+{
+    content: '';
+
+    position: absolute;
+    background-image: url('../icons/context-icons/right.png');
+
+    right: 10px;
+    width: 15px;
+    height: 15px;
+}
+
+p.personalize::before
+{
+    content: '';
+    left: 0;
+    
+    background-image: url('../icons/context-icons/personalize.png');
+    
+
+    width: 15px;
+    height: 15px;
+    margin-left: 5px;
+}

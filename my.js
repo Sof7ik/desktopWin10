@@ -1,69 +1,93 @@
 let date, hours, minutes, seconds, day, month; //переменные времени
-let target, activeitems;
+let target, activeitems, contextMenus;
 let aboutMeValue;
-let notepad, folder, browser, portal;
+let notepad, folder, browser;
 let fileName;
 let zIndex = 2;
 
+// let value, allAudio; //тута мы будем громкость менять
+
 const mainElement = document.querySelector('main');
 
-//подмена картинок в проводнике
-const swapExplorerArrows = () => {
-    document.querySelector('img.left-arrow').addEventListener('mouseover', (event) => {
-        document.querySelector('img.left-arrow').setAttribute('src', './icons/programm-icons/to-arrow blue.png');
-    })
-    document.querySelector('img.left-arrow').addEventListener('mouseout', (event) => {
-        document.querySelector('img.left-arrow').setAttribute('src', './icons/programm-icons/to-arrow white.png');
-    })
-}
+// class DesktopItem
+// {
+//     constructor()
+//     {
+//         this.el = document.createElement('div');
+//         this.el.classList.add('program');
+//     }
+   
+//     create(text, what) {
+//         this.img = document.createElement('img');
+//         this.img.setAttribute('alt', 'image');
 
-//открытие разных программ
-const openTxtFile = (fileName) => {
-    aboutMeValue = `Привет, я учусь в Щелковской шараге на 3 курсе на web-разраба. Вроде как фулл стэк, но даже код для этого проекта я частично Ctrl+C — Ctrl+V...`
+//         this.txt = document.createElement('span');
+//         this.txt.innerText = text
 
-    notepad = document.createElement('div');
-    notepad.classList.add('notepad', 'activeProg');
-    notepad.style.zIndex = zIndex;
-    zIndex++;
-    notepad.innerHTML = `
-    <div class="title">
-        <div class="left-programm-title">
-            <img class="programm-icon" src="./icons/programm-icons/notepad.png" alt="icon">
-            <span class="programm-title">${fileName} — Notepad</span>
-        </div>
-    
-        <div class="right-programm-title">
-            <span class="programm-change-size semi-close">—</span>
-            <img class="programm-change-size full-window" src="./icons/programm-icons/full-window.png" alt="full-window">
-            <img class="programm-change-size close" src="./icons/programm-icons/close.png" alt="close">
-        </div>
-    </div>
-    <nav class="notepad-nav">
-        <span class="notepad-navigation-item">File</span>
-        <span class="notepad-navigation-item">Edit</span>
-        <span class="notepad-navigation-item">Format</span>
-        <span class="notepad-navigation-item">View</span>
-        <span class="notepad-navigation-item">HELP</span>
-    </nav>
-    <div class="notepad-text">
-        <textarea name="notepad-message" id="" class="notepad-textarea" resize readonly>${aboutMeValue}</textarea>
-    </div>
-    `
-    mainElement.prepend(notepad);
-    notepad.style.opacity = 1;
-    dragElement(document.querySelector("div.notepad"));
-    clearActiveElements();
-    document.querySelector('img.close').addEventListener('click', closeProgramm);
-}
+//         this.el.insertAdjacentElement('beforeend', this.img);
+//         this.el.insertAdjacentElement('beforeend', this.txt);
+        
+//         if (what == 'folder')
+//         {
+//             this.el.classList.add('folder');
+//             this.img.setAttribute('src', './folder.png');
+            
+//         } else if (what == 'txt') {
+//             this.el.classList.add('txt');
+//             this.img.setAttribute('src', './txt.png');
+//         }
 
-const openFolder = (fileName) => {
-    explorer = document.createElement('div');
-    explorer.classList.add('explorer', 'activeProg');
-    explorer.style.zIndex = zIndex;
-    zIndex++;
-    explorer.innerHTML =
-    `
-    <div class="explorer-title">
+//         document.querySelector('.container').insertAdjacentElement('beforeend', this.el);
+//     }
+// }
+
+class Program
+{
+    //what MUST BE like "explorer", "notepad", "browser" so like classes in CSS
+    constructor(what)
+    {
+        this.element = document.createElement('div');
+        this.element.classList.add(what, 'activeProg');
+        this.element.style.zIndex = zIndex;
+        zIndex++;
+    }
+
+    openTxt(fileName, what)
+    {
+        aboutMeValue = `Привет, я учусь в Щелковской шараге на 3 курсе на web-разраба. Вроде как фулл стэк, но даже код для этого проекта я частично Ctrl+C — Ctrl+V...`;
+        this.element.insertAdjacentHTML('afterbegin', `
+            <div class="title">
+                <div class="left-programm-title">
+                    <img class="programm-icon" src="./icons/programm-icons/notepad.png" alt="icon">
+                    <span class="programm-title">${fileName} — Notepad</span>
+                </div>
+        
+                <div class="right-programm-title">
+                    <span class="programm-change-size semi-close">—</span>
+                    <img class="programm-change-size full-window" src="./icons/programm-icons/full-window.png" alt="full-window">
+                    <img class="programm-change-size close" src="./icons/programm-icons/close.png" alt="close">
+                </div>
+            </div>
+            
+            <nav class="notepad-nav">
+                <span class="notepad-navigation-item">File</span>
+                <span class="notepad-navigation-item">Edit</span>
+                <span class="notepad-navigation-item">Format</span>
+                <span class="notepad-navigation-item">View</span>
+                <span class="notepad-navigation-item">HELP</span>
+            </nav>
+
+            <div class="notepad-text">
+                <textarea name="notepad-message" id="" class="notepad-textarea" resize readonly>${aboutMeValue}</textarea>
+            </div>
+        `); 
+        this.giveAllFuncs(what);
+    }
+
+    openFolder(fileName, what)
+    {
+        this.element.insertAdjacentHTML('afterbegin', `
+            <div class="explorer-title">
                 <div class="left-programm-title left-explorer-title">
                     <img class="explorer-icon" src="./icons/programm-icons/explorer.png" alt="logo">
                     <span class="explorer-title">${fileName}</span>
@@ -116,17 +140,17 @@ const openFolder = (fileName) => {
                         <img class="bin" src="./icons/desktop-icons/bin.png" alt="Bin">
                         <span class="file-name">Корзина</span>
                     </div>
-        
+
                     <div class="desktop-item folder">
                         <img class="folder" src="./icons/desktop-icons/folder.png" alt="Folder">
                         <span class="file-name">Новая папка</span>
                     </div>
-        
+
                     <div class="desktop-item txt">
                         <img class="txt" src="./icons/desktop-icons/txt.png" alt="Txt-file">
                         <span class="file-name">aboutMe.txt</span>
                     </div>
-        
+
                     <div class="desktop-item shortcut">
                         <img class="shortcut" src="./icons/desktop-icons/txt.png" alt="shortcut">
                         <span class="file-name">Имя ярлыка</span>
@@ -137,21 +161,15 @@ const openFolder = (fileName) => {
             <div class="explorer-footer">
                 <p class="explorer-footer-element-count">Элементов: 29</p>
             </div>
-    `
-    mainElement.prepend(explorer);
-    explorer.style.opacity = 1;
-    swapExplorerArrows();
-    dragElement(document.querySelector("div.explorer"));
-    clearActiveElements();
-    document.querySelector('img.close').addEventListener('click', closeProgramm);
-}
+        `); 
+        this.giveAllFuncs(what);
+        swapExplorerArrows();
+    }
 
-const openBrowser = () => {
-    browser = document.createElement('div');
-    browser.classList.add('browser');
-    browser.innerHTML = 
-    `
-    <div class="browser-title">
+    openBrowser(link = 'https://vk.com/im', what)
+    {
+        this.element.insertAdjacentHTML('afterbegin', `
+            <div class="browser-title">
                 <div class="left-programm-title left-browser-title">
                     <div class="browser-tab">
                         <p class="tab-name">Новая вкладка</p>
@@ -181,16 +199,23 @@ const openBrowser = () => {
                 </div>
             </div>
             <div class="main">
-                <iframe src="https://learn.javascript.ru/" class="browser-iframe"></iframe>
+                <iframe src="${link}" class="browser-iframe"></iframe>
             </div>
             <div class="browser-footer">
                 <p>Привет я хром</p>
             </div>
-    `
-    mainElement.prepend(browser);
-    dragElement(document.querySelector("div.browser"));
-    clearActiveElements();
-    document.querySelector('img.close').addEventListener('click', closeProgramm);
+        `);
+        this.giveAllFuncs(what);
+    }
+    
+    giveAllFuncs(what)
+    {
+        mainElement.insertAdjacentElement('afterbegin', this.element);
+        dragElement(document.querySelector(`div.${what}`));
+        clearActiveElements();
+        document.querySelector('img.close').addEventListener('click', closeProgramm);
+    }
+
 }
 
 const openBin = () => {
@@ -201,14 +226,6 @@ const openBin = () => {
 //закрытие программы
 const closeProgramm = (event) => {
     event.target.parentElement.parentElement.parentElement.remove();
-}
-
-//убираем выделение с файла
-const clearActiveElements = () => {
-    activeItems = document.querySelectorAll('div.active');
-    activeItems.forEach((item) => {
-        item.classList.remove('active');
-    })
 }
 
 //функция выделения "файлов" при клике
@@ -225,6 +242,45 @@ const makeFileActive = (event) => {
     }
 }
 
+const deleteContextMenus = () =>
+{
+    if(document.querySelectorAll('div.context-menu'))
+    {
+        let allContexts = document.querySelectorAll('div.context-menu');
+        allContexts.forEach( (item) => {
+            item.remove();
+        })
+    }
+}
+
+const makeContextMenu = (event) =>
+{
+    event.stopPropagation();
+    event.preventDefault();
+    
+    let newDiv = document.createElement('div');
+    newDiv.classList.add('context-menu')
+    
+    newDiv.style.top = `${event.clientY}px`;
+    newDiv.style.left = `${event.clientX}px`;
+
+    deleteContextMenus();
+    clearActiveElements();
+    makeFileActive(event);
+    
+    mainElement.prepend(newDiv);
+
+}
+
+//убираем выделение с файла
+const clearActiveElements = () => {
+    activeItems = document.querySelectorAll('div.active');
+    activeItems.forEach((item) => {
+        item.classList.remove('active');
+    })
+    deleteContextMenus();
+}
+
 //проверяем, на что кликнули - ярлык, папка, текстовый документ
 const checkFileTypeOnDBLClick = (event) => {
     target = event.target.parentElement;
@@ -236,15 +292,15 @@ const checkFileTypeOnDBLClick = (event) => {
     }
 
     if (target.classList.contains('txt')) {
-        openTxtFile(fileName);
+        new Program('notepad').openTxt(fileName, 'notepad');
     }
 
     if (target.classList.contains('folder')) {
-        openFolder(fileName);
+        new Program('explorer').openFolder(fileName, 'explorer');
     }
 
     if (target.classList.contains('shortcut')) {
-        openBrowser(fileName);
+        new Program('browser').openBrowser('https://youtube.com/', 'browser');
     }
 }
 
@@ -288,6 +344,16 @@ function dragElement(elmnt) {
     }
 }
 
+//подмена картинок в проводнике
+const swapExplorerArrows = () => {
+    document.querySelector('img.left-arrow').addEventListener('mouseover', (event) => {
+        document.querySelector('img.left-arrow').setAttribute('src', './icons/programm-icons/to-arrow blue.png');
+    })
+    document.querySelector('img.left-arrow').addEventListener('mouseout', (event) => {
+        document.querySelector('img.left-arrow').setAttribute('src', './icons/programm-icons/to-arrow white.png');
+    })
+}
+
 //подмена картинок "Пуск"
 const swapWinLogo = () => {
     document.querySelector('div.task-panel-programm').addEventListener('mouseover', (event) => {
@@ -325,9 +391,16 @@ const setDate = () => {
 //каждую минуту перевыводим время и дату
 setInterval(() =>{
     setDate();
+    allAudio = document.querySelectorAll('audio');
 }, 1000);
 
 setDate();
 document.querySelector('main').addEventListener('click', makeFileActive);
 document.querySelector('main').addEventListener('dblclick', checkFileTypeOnDBLClick);
+
+document.querySelectorAll('*').forEach((item) =>
+{
+    item.addEventListener('contextmenu', makeContextMenu)
+})
+
 swapWinLogo();
