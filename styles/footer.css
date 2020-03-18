@@ -1,13 +1,16 @@
 footer
 {
     background-color: rgba(0, 0, 0, 0.9);
-    height: 4vh;
+    min-height: 4%;
     width: 100vw;
 
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
-    align-items: center;
+    align-items: stretch;
+
+    position: relative;
+    z-index: 1000000;
 }
 
 section.left-side-footer, section.right-side-footer
@@ -17,7 +20,7 @@ section.left-side-footer, section.right-side-footer
     justify-content: space-between;
     align-items: center;
 
-    height: 100%;
+    /* height: 100%; */
 }
 
 section.right-side-footer
