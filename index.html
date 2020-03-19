@@ -25,10 +25,11 @@
 
     <main>
 
-        <div class="explorer-title">
+    <div class="explorer">
+        <div class="title">
             <div class="left-programm-title left-explorer-title">
                 <img class="explorer-icon" src="./icons/programm-icons/explorer.png" alt="logo">
-                <span class="explorer-title">${fileName}</span>
+                <span class="programm-title">${fileName}</span>
             </div>
                 
             <div class="right-programm-title right-explorer-title">
@@ -37,7 +38,7 @@
                 <img class="programm-change-size close" src="./icons/programm-icons/close.png" alt="close">
             </div>
         </div>
-        <nav>
+        <nav class="explorer-nav">
             <a class="explorer-navigation-item active-explorer-navigation-item">File</a>
             <a class="explorer-navigation-item">Home</a>
             <a class="explorer-navigation-item">Share</a>
@@ -99,6 +100,7 @@
         <div class="explorer-footer">
             <p class="explorer-footer-element-count">Элементов: 29</p>
         </div>
+    </div>
 
         <!-- <div class="settings">
 
@@ -108,25 +110,7 @@
 
         </div> -->
 
-        <!-- <div class="context-menu">
-            <ul class="context-menu first">
-                <li><p class="context-item view">View</p></li>
-                <li><p class="context-item sort">Sort by</p></li>
-                <li><p class="context-item refresh">Refresh</p></li>
-            </ul>
-            
-            <ul class="context-menu second">
-                <li><p class="context-item paste">Paste</p></li>
-                <li><p class="context-item paste-shortcut">Paste shortcut</p></li>
-            </ul>
-
-            
-            <ul class="context-menu third">
-                <p class="context-item new">New</p>
-            </ul>
-
-            <p class="context-item personalize">Personalize</p>
-        </div> -->
+        <!--  -->
 
         <div class="desktop-wrapper">
 
@@ -223,7 +207,12 @@
         // let html = document.documentElement;
         // fullScreen(html);
     </script>
-    <script src="./my.js"></script>
+    <script type="text/javascript" src="./js/Classes.js"></script>
+    <script type="text/javascript" src="./js/context-menu.js"></script>
+    <script type="text/javascript" src="./js/explorer.js"></script>
+    <script type="text/javascript" src="./js/footer.js"></script>
+    <script type="text/javascript" src="./js/desktop.js"></script>
+    <script type="text/javascript" src="./js/main.js"></script>
     
 </body>
 </html>

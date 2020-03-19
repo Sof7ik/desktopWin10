@@ -20,50 +20,12 @@ div.notepad
 
     min-height: calc(37px + 16px);
     min-width: 250px;
-}
 
-div.title
-{
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    align-items: center;
-    
     color: #000;
-
-    cursor: default;
-}
-
-/* div.left-programm-title, div.right-programm-title
-{
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: flex-start;
-    align-items: center;
-} */
-
-div.left-programm-title
-{
-    flex-grow: 1;
-    cursor: move;
-}
-
-span.programm-title 
-{
-    font-size: 13px;
-    margin-left: 5px;
-}
-
-nav.notepad-nav
-{
-    font-size: 13px;
-    border-bottom: 1px solid rgba(199, 199, 199, 0.63);
-    cursor: default;
 }
 
 nav.notepad-nav span.notepad-navigation-item
 {
-    /* padding: 3px 7px; */
     padding: 0px 7px;
 }
 
@@ -74,16 +36,16 @@ nav.notepad-nav span.notepad-navigation-item:hover
 
 .programm-change-size 
 {
-    margin-right: 10px;
     height: 100%;
     padding: 4px;
-    transition: all .2s;
+    transition: all .2s; 
+    color: #fff;
 }
 
 .programm-change-size:hover
 {
     background-color: rgba(143, 143, 143, 0.4);
-    color: #fff;
+   
     transition: all .2s;
 }
 
