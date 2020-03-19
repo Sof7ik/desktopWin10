@@ -1,0 +1,206 @@
+div.settings
+{
+    width: 100vw;
+    height: 100vh;
+
+    position: absolute;
+    top: 0%;
+    left: 0%;
+
+    resize: both;
+    overflow: hidden;
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    z-index: 10000;
+
+    color: #fff;
+    background-color: #000;
+}
+
+aside.left
+{
+    background-image: linear-gradient(to right, #111111, rgb(7, 7, 7));
+    height: 100%;
+    min-width: 400px;
+    /* padding: 5px 10px; */
+}
+
+div.left-title
+{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-starts;
+    align-items: center;
+}
+
+div.left-title img
+{
+    width: 20px;
+}
+
+span.settings-title
+{
+    position: relative;
+    padding: 10px 0px 10px 40px;
+}
+
+div.left-title span.settings-title::before
+{
+    transform: rotate(180deg);
+    width: 20px;
+    top: 0;
+    background-image: url('../icons/programm-icons/to-arrow.png');
+}
+
+div.first-setting-div
+{
+    margin-top: 20px;
+}
+
+div.setting-item
+{
+    padding: 15px 0px;
+    transition: all .3s;
+}
+
+div.setting-item:hover
+{
+    background-color: #484848;
+}
+
+div.setting-item img
+{
+    width: 13px;
+}
+
+p.setting-item
+{
+    font-size: 20px;
+    position: relative;
+    padding-left: 40px;
+    cursor: default;
+}
+
+p.parametr-name
+{
+    margin-bottom: 40px;
+    font-size: 17px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+div.setting-item p.setting-item
+{
+    margin-left: 10px;
+}
+
+div.setting-search
+{
+    border: 2px solid #717171;
+    margin-bottom: 25px;
+    position: relative;
+    margin: 0px 20px 25px 10px; 
+}
+
+div.setting-search:hover
+{
+    border: 2px solid #919191;
+}
+
+div.setting-search::after
+{
+    content: '';
+    position: absolute;
+    right: 0;
+
+    display: inline-block;
+
+    background-image: url('../icons/left-panel/search/search.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+
+    transform: scaleX(-1);
+    width: 25px;
+    height: 100%;
+}
+
+div.setting-search input
+{
+    background-color: #0a0a0a;
+    border: none;
+    text-indent: 7px;
+    font-size: 17px;
+    padding: 5px 10px;
+    width: 92%;
+    color: #fff;
+}
+
+div.setting-search input:focus
+{
+    background-color: #fff;
+    color: #000;
+}
+
+div.setting-search input::selection{
+    background-color: rgba(48, 131, 255, 0.5);
+}
+
+p.home::before,
+p.desktop-bg::before, 
+p.colors::before, 
+p.login-screen::before, 
+p.themes::before,
+p.fonts::before,
+span.settings-title::before
+{
+    content: '';
+    position: absolute;
+    left: 0;
+    
+    
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+
+    display: inline-block;
+    width: 25px;
+    height: 100%;
+}
+
+p.home::before{background-image: url('../icons/programm-icons/settings-icons/home-settings.png');}
+p.desktop-bg::before{background-image: url('../icons/programm-icons/settings-icons/desktop-bg.png');}
+p.colors::before{background-image: url('../icons/programm-icons/settings-icons/colors.png');}
+p.login-screen::before{background-image: url('../icons/programm-icons/settings-icons/desktop-bg.png');}
+p.themes::before{background-image: url('../icons/programm-icons/settings-icons/desktop-bg.png');}
+p.fonts::before{background-image: url('../icons/programm-icons/settings-icons/desktop-bg.png');}
+
+aside.right
+{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    padding-left: 30px;
+    width: calc(100% - 1px);
+}
+
+aside.right .right-settings-title
+{
+    width: 100%;
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+img.desktop-bg-example
+{
+    margin-top: 25px;
+}
