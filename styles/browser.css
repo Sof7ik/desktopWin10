@@ -12,6 +12,7 @@ div.browser
     justify-content: flex-start;
     align-items: flex-start;
     resize: both;
+    overflow: auto;
 }
 
 div.browser, input.browser-search

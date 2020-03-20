@@ -58,7 +58,7 @@ div.desktop-item:hover, div.active {
     transition: all .4s;
 }
 
-img.folder, img.txt, img.shortcut, img.bin
+img.folder, img.txt, img.shortcut, img.bin, img.settings
 {
     width: 50px;
     height: 50px;
@@ -70,4 +70,9 @@ span.file-name
     font-size: 13px;
     text-align: center;
     color: #fff;
+}
+
+img.folder::selection, img.txt::selection, img.shortcut::selection, img.bin::selection, span.file-name::selection
+{
+    background-color: rgba(0, 0, 0, 0);
 }

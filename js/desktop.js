@@ -3,6 +3,31 @@ const closeProgramm = (event) => {
     event.target.parentElement.parentElement.parentElement.remove();
 }
 
+const fullWindow = (event) =>
+{
+    let parentElement = event.target.parentElement.parentElement.parentElement;
+    if (parentElement.style.height == '100vh' && parentElement.style.width == '100vw')
+    {
+        console.log("parentElement.style.height == '100vh' && parentElement.style.width == '100vw'");
+        parentElement.style.top = '7%';
+        parentElement.style.left = '14%';
+        parentElement.style.height = '50%';
+        parentElement.style.width = '60%';
+    } else {
+        console.log("parentElement.style.height !== '100vh' && parentElement.style.width !== '100vw'");
+        parentElement.style.top = '0px';
+        parentElement.style.left = '0px';
+        parentElement.style.height = '100vh';
+        parentElement.style.width = '100vw';
+    }
+}
+    
+const semiCloseWindow = (event) =>
+{
+    let parentElement = event.target.parentElement.parentElement.parentElement;
+    parentElement.style.display = 'none';
+}
+
 //функция выделения "файлов" при клике
 const makeFileActive = (event) => {
     target = event.target.parentElement;
@@ -46,6 +71,11 @@ const checkFileTypeOnDBLClick = (event) => {
 
     if (target.classList.contains('shortcut')) {
         new Program('browser').openBrowser('https://youtube.com/', 'browser');
+    }
+
+    if (target.classList.contains('desktop-settings'))
+    {
+        new Program('settings').openSettings('settings');
     }
 }
 

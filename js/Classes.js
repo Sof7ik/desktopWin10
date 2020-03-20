@@ -32,7 +32,7 @@ class DesktopItem
 
 class Program
 {
-    //what MUST BE like "explorer", "notepad", "browser" so like classes in CSS
+    //what MUST BE like "explorer", "notepad", "browser", "settings" so like classes in CSS
     constructor(what)
     {
         this.element = document.createElement('div');
@@ -52,9 +52,10 @@ class Program
                 </div>
         
                 <div class="right-programm-title">
-                    <span class="programm-change-size semi-close">—</span>
-                    <img class="programm-change-size full-window" src="./icons/programm-icons/full-window.png" alt="full-window">
-                    <img class="programm-change-size close" src="./icons/programm-icons/close.png" alt="close">
+                    <span class="programm-change-size semi-close" style="color: #000;">—</span>
+                    <img class="programm-change-size full-window" src="./icons/programm-icons/full-window.png" alt="full-window" style="color: transparent;">
+                    <!-- <img class="programm-change-size close" src="./icons/programm-icons/close.png" alt="close"> -->
+                    <span class="programm-change-size close" style="color: #000;">×</span>
                 </div>
             </div>
             
@@ -85,7 +86,8 @@ class Program
                 <div class="right-programm-title right-explorer-title">
                     <span class="programm-change-size semi-close">—</span>
                     <img class="programm-change-size full-window" src="./icons/programm-icons/full-window.png" alt="full-window">
-                    <img class="programm-change-size close" src="./icons/programm-icons/close.png" alt="close">
+                    <!-- <img class="programm-change-size close" src="./icons/programm-icons/close.png" alt="close"> -->
+                    <span class="programm-change-size close">×</span>
                 </div>
             </div>
             <nav class="explorer-nav">
@@ -168,7 +170,8 @@ class Program
                 <div class="right-programm-title right-browser-title">
                     <span class="programm-change-size semi-close">—</span>
                     <img class="programm-change-size full-window" src="./icons/programm-icons/full-window.png" alt="full-window">
-                    <img class="programm-change-size close" src="./icons/programm-icons/close.png" alt="close">
+                    <!-- <img class="programm-change-size close" src="./icons/programm-icons/close.png" alt="close"> -->
+                    <span class="programm-change-size close">×</span>
                 </div>
             </div>
             <div class="browser-navigate">
@@ -202,13 +205,122 @@ class Program
         console.log('From function:', "Bin opened");
         this.giveAllFuncs(what);
     }
+
+    openSettings(what)
+    {
+        this.element.style.height = '100vh';
+        this.element.style.width = '100vw';
+        this.element.insertAdjacentHTML('afterbegin',
+        `
+        <aside class="left">
+                <div class="left-title">
+                    <div class="left-programm-title">
+                        <span class="settings-title">Parametrs</span>
+                    </div>
+                </div>
+
+                <div class="first-setting-div">
+
+                    <div class="setting-item" style="margin-bottom: 10px;">
+                        <p class="setting-item home">Home</p>
+                    </div>
+
+                    <div class="setting-search">
+                        <input type="text" placeholder="Search for parametr">
+                    </div>
+                    
+                    <p class="parametr-name">Personalize</p>
+
+                </div>
+                
+                <ul class="all-settings">
+                    <li>
+                        <div class="setting-item">
+                            <p class="setting-item desktop-bg">Desktop background</<p>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="setting-item">
+                            <p class="setting-item desktop-bg">Colors</<p>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="setting-item">
+                            <p class="setting-item desktop-bg">Login screen</<p>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="setting-item">
+                            <p class="setting-item desktop-bg">Themes</<p>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="setting-item">
+                            <p class="setting-item desktop-bg">Fonts</p>
+                        </div>
+                    </li>
+                </ul> 
+            </aside>
+
+            <aside class="right">
+                <div class="right-programm-title right-settings-title"> 
+                    <span class="programm-change-size semi-close">—</span>
+                    <img class="programm-change-size full-window" src="./icons/programm-icons/full-window.png" alt="full-window">
+                    <!-- <img class="programm-change-size close" src="./icons/programm-icons/close.png" alt="close"> -->
+                    <span class="programm-change-size close">×</span>
+                </div>
+
+                <h1 class="right-aside-title">Desktop background</h1>
+
+                <img class="desktop-bg-example" src="./settings/desktop-bg-example-1.png" alt="">
+
+                <h3>Background</h3>
+                <select id="select-bg-type">
+                    <option>Photo</option>
+                    <option>Color</option>
+                    <option>Slides</option>
+                </select>
+
+                <div class="choosen">
+                    <h3>Choose a photo</h3>
+                    <div class="desktop-photos">
+                        <div class="desktop-photo" data-number="1"></div>
+                        <div class="desktop-photo" data-number="2"></div>
+                        <div class="desktop-photo" data-number="3"></div>
+                        <div class="desktop-photo" data-number="4"></div>
+                        <div class="desktop-photo" data-number="5"></div>
+                    </div>
+                    <input type="file" id="select-desktop-image">
+                    <label class="select-desktop-image-label" for="select-desktop-image">Обзор</label>
+                </div>
+
+                <h3 class="choose-pos">Choose position</h3>
+                <select id="select-contain-type">
+                    <option data-position="contain">Contain</option>
+                    <option data-position="Cover">Cover</option>
+                    <option data-position="100%">100%</option>
+                    <option  data-position="background-repeat">background-repeat</option>
+                </select>
+                
+            </aside>
+        `)
+        this.giveAllFuncs(what)
+        ChangeDesktopBgType();
+        SelectNewColor();
+    }
     
     giveAllFuncs(what)
     {
         mainElement.insertAdjacentElement('afterbegin', this.element);
         dragElement(document.querySelector(`div.${what}`));
         clearActiveElements();
-        document.querySelector('img.close').addEventListener('click', closeProgramm);
+        document.querySelector('span.close').addEventListener('click', closeProgramm);
+        document.querySelector('img.full-window').addEventListener('click', fullWindow);
+        document.querySelector('span.semi-close').addEventListener('click', semiCloseWindow);
     }
 
 }

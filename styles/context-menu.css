@@ -2,10 +2,12 @@ div.context-menu
 {
     background-color: #2b2b2b;
     position: absolute;
+    z-index: 1000000000;
     border: 1px solid #fff;
     min-width: 300px;
 
     padding: 5px 0px;
+
 }
 
 ul.context-menu 

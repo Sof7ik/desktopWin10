@@ -36,8 +36,6 @@ nav.notepad-nav span.notepad-navigation-item:hover
 
 .programm-change-size 
 {
-    height: 100%;
-    padding: 4px;
     transition: all .2s; 
     color: #fff;
 }

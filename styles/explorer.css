@@ -60,15 +60,14 @@ a.explorer-navigation-item:hover
     transition: all .1s;
 }
 
-.programm-change-size 
-{
-    height: 100%;
-    padding: 4px;
-}
-
 .programm-change-size:hover
 {
     background-color: rgba(143, 143, 143, 0.4);
+}
+
+.close:hover
+{
+    background-color: rgba(255, 0, 0, 1);
 }
 
 .right-programm-title .programm-change-size:last-child

@@ -21,17 +21,19 @@
     <link rel="shortcut icon" href="https://img.icons8.com/officexs/16/000000/windows-10.png" type="image/x-icon">
     <!-- GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed&display=swap&subset=cyrillic-ext,latin-ext" rel="stylesheet">
+    <link type="font/ttf" href="./fonts/SegoeUI.ttf">
 </head>
 <body>
 
     <main>
 
-    </div>
-
-        <div class="settings">
+        <!-- <div class="settings activeProg" style="width: 100vw; height: 100vh;">
+            
             <aside class="left">
                 <div class="left-title">
-                    <span class="settings-title">Parametrs</span>
+                    <div class="left-programm-title">
+                        <span class="settings-title">Parametrs</span>
+                    </div>
                 </div>
 
                 <div class="first-setting-div">
@@ -78,31 +80,68 @@
                             <p class="setting-item desktop-bg">Fonts</p>
                         </div>
                     </li>
-                </ul>
-
-                 
-                
+                </ul> 
             </aside>
 
             <aside class="right">
-                <div class="right-programm-title right-settings-title">
+                <div class="right-programm-title right-settings-title"> 
                     <span class="programm-change-size semi-close">—</span>
                     <img class="programm-change-size full-window" src="./icons/programm-icons/full-window.png" alt="full-window">
-                    <img class="programm-change-size close" src="./icons/programm-icons/close.png" alt="close">
+                    <!-- <img class="programm-change-size close" src="./icons/programm-icons/close.png" alt="close"> -->
+                    <!-- <span class="programm-change-size close">×</span>
                 </div>
 
                 <h1 class="right-aside-title">Desktop background</h1>
 
                 <img class="desktop-bg-example" src="./settings/desktop-bg-example-1.png" alt="">
 
-            </aside>
-        </div>
+                <h3>Background</h3>
+                <select id="select-bg-type">
+                    <option>Photo</option>
+                    <option>Color</option>
+                    <option>Slides</option>
+                </select>
 
-        <!--<div class="bin">
+                <div class="choosen">
+                    <h3>Choose a color</h3>
+                    <div class="desktop-colors">
+                        <div class="desktop-color"></div>
+                        <div class="desktop-color"></div>
+                        <div class="desktop-color"></div>
+                        <div class="desktop-color"></div>
+                        <div class="desktop-color"></div>
+                        <div class="desktop-color"></div>
+                        <div class="desktop-color"></div>
+                        <div class="desktop-color"></div>
+                        <div class="desktop-color"></div>
+                        <div class="desktop-color"></div>
+                        <div class="desktop-color"></div>
+                        <div class="desktop-color"></div>
+                        <div class="desktop-color"></div>
+                        <div class="desktop-color"></div>
+                        <div class="desktop-color"></div>
+                        <div class="desktop-color"></div>
+                    </div>
+                    <input type="file" id="select-desktop-image">
+                    <label class="select-desktop-image-label" for="select-desktop-image">Обзор</label>
+                </div>
+
+                <h3>Choose position</h3>
+                <select>
+                    <option data-position="contain">Contain</option>
+                    <option data-position="Cover">Cover</option>
+                    <option data-position="100%">100%</option>
+                    <option  data-position="background-repeat">background-repeat</option>
+                </select>
+                
+            </aside>
 
         </div> -->
 
-        <!--  -->
+   
+        <!--<div class="bin">
+
+        </div> -->
 
         <div class="desktop-wrapper">
 
@@ -131,10 +170,13 @@
                 <span class="file-name">Имя ярлыка</span>
             </div>
 
+            <div class="desktop-item desktop-settings">
+                <img class="settings" src="./icons/desktop-icons/settings.png" alt="settings">
+                <span class="file-name">Персонали-зация</span>
+            </div>
         </div>
 
     </main>
-
 
     <footer>
         <section class="left-side-footer">
@@ -157,9 +199,11 @@
 
             </div>
 
-            <div class="tray-panel-programm">
-                <img class="programm-icon" src="./icons/right-panel/messages/messages.png" alt="Messages">
-            </div>
+            <abbr title="Новых уведомлений нет" style="height: 100%;">
+                <div class="tray-panel-programm">
+                    <img class="programm-icon" src="./icons/right-panel/messages/messages.png" alt="Messages">    
+                </div>
+            </abbr>
 
             <div class="tray-panel-programm time">
                 <span class="time"></span>
@@ -176,7 +220,6 @@
        
     </footer>
      <script>
-        
 
         // function fullScreen(element) {
         //     if (element.requestFullscreen) {
@@ -203,6 +246,7 @@
     <script type="text/javascript" src="./js/context-menu.js"></script>
     <script type="text/javascript" src="./js/explorer.js"></script>
     <script type="text/javascript" src="./js/footer.js"></script>
+    <script type="text/javascript" src="./js/settings.js"></script>
     <script type="text/javascript" src="./js/desktop.js"></script>
     <script type="text/javascript" src="./js/main.js"></script>
     
