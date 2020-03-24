@@ -1,13 +1,10 @@
 //скрытие контекстного меню
 const deleteContextMenus = () =>
 {
-    if(document.querySelectorAll('div.context-menu'))
-    {
-        let allContexts = document.querySelectorAll('div.context-menu');
-        allContexts.forEach( (item) => {
-            item.remove();
-        })
-    }
+    let allContexts = document.querySelectorAll('div.context-menu');
+    allContexts.forEach( (item) => {
+        item.remove();
+    })
 }
 
 //открытие контекстного меню

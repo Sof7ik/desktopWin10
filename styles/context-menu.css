@@ -33,6 +33,11 @@ div.context-menu p
     padding: 2px 0px 2px 25px;
     cursor: default;
     position: relative;
+
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 div.context-menu p::before, div.context-menu p::after
@@ -49,6 +54,11 @@ div.context-menu p:hover
 {
     background-color: #414141;
 }
+
+/* div.context-menu p.new:hover div.create
+{
+
+} */
 
 p.view::after, p.sort::after, p.new::after
 {

@@ -3,6 +3,7 @@ let target, activeitems, contextMenus;
 let aboutMeValue;
 let notepad, folder, browser;
 let fileName;
+let filesFromDatabase;
 let zIndex = 2;
 
 // let value, allAudio; //тута мы будем громкость менять
@@ -25,3 +26,18 @@ document.querySelectorAll('*').forEach((item) =>
 })
 
 swapWinLogo();
+
+fetch('../php/getfiles.php')
+.then((res) =>
+{
+    return res.json();
+})
+.then((jsonRes) => {
+    filesFromDatabase = jsonRes;
+    console.log('arr', filesFromDatabase);
+    jsonRes.forEach( (item) => {
+        console.log(item);
+        new Program().createTxt(item.filename, item.id);
+        
+    })
+})

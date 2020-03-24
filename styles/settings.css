@@ -13,7 +13,8 @@ div.settings
     align-items: flex-start;
 
     z-index: 10000;
-
+    min-width: 780px;
+    min-height: 300px;
     color: #fff;
 }
 
@@ -23,6 +24,7 @@ aside.left
     height: 100%;
     min-width: 400px;
     overflow: hidden;
+    overflow-y: auto;
     /* padding: 5px 10px; */
     backdrop-filter: blur(10px);
 }
@@ -96,20 +98,25 @@ div.setting-item p.setting-item
     margin-left: 10px;
 }
 
-div.setting-search
+form.setting-search
 {
     border: 2px solid #717171;
     margin-bottom: 25px;
     position: relative;
     margin: 0px 20px 25px 10px; 
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
 }
 
-div.setting-search:hover
+form.setting-search:hover
 {
     border: 2px solid #919191;
 }
 
-div.setting-search::after
+/* div.setting-search::after
 {
     content: '';
     position: absolute;
@@ -125,26 +132,47 @@ div.setting-search::after
     transform: scaleX(-1);
     width: 25px;
     height: 100%;
+} */
+
+input.search-btn
+{
+    background-image: url('../icons/left-panel/search/search.png');
+    background-repeat: no-repeat;
+    background-size: 70%;
+    background-position: center center;
+    transform: scaleX(-1);
+
+    height: 100%;
+    outline: none;
+    width: 32px;
+    height: 32px;
+
 }
 
-div.setting-search input
+form.setting-search input
 {
     background-color: #0a0a0a;
     border: none;
-    text-indent: 7px;
-    font-size: 17px;
-    padding: 5px 10px;
-    width: 92%;
-    color: #fff;
+    
+    flex-grow: 1;
 }
 
-div.setting-search input:focus
+form.setting-search input.search-input-text
+{
+    text-indent: 7px;
+    font-size: 17px;
+    width: 92%;
+    color: #fff;
+    padding: 5px 10px;
+}
+
+form.setting-search input[type="text"]:focus
 {
     background-color: #fff;
     color: #000;
 }
 
-div.setting-search input::selection{
+form.setting-search input::selection{
     background-color: rgba(48, 131, 255, 0.5);
 }
 
@@ -210,6 +238,7 @@ aside.right .right-settings-title
     justify-content: flex-end;
     align-self: flex-end;
     align-items: center;
+    position: fixed;
 }
 
 img.desktop-bg-example
@@ -284,12 +313,16 @@ div.desktop-photo
     width: 90px;
     height: 90px;
 
-    background-image: url('../desktop-bg/DSC01142.JPG');
     background-size: cover;
     background-position: center center;
 
     margin-right: 5px;
     transition: all .3s;
+}
+
+div.desktop-photo-active
+{
+    border: 2px solid red;
 }
 
 div.desktop-color
@@ -322,11 +355,6 @@ div.current-color
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-div.desktop-photos div.desktop-photo:nth-child(2)
-{
-    background-image: url('../desktop-bg/ken_roczen_suzuki_2015.jpg');
 }
 
 div.desktop-photo:hover

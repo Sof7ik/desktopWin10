@@ -225,9 +225,10 @@ class Program
                         <p class="setting-item home">Home</p>
                     </div>
 
-                    <div class="setting-search">
-                        <input type="text" placeholder="Search for parametr">
-                    </div>
+                    <form class="setting-search">
+                        <input type="text" placeholder="Search for parametr" class="search-input-text">
+                        <input type="submit" class="search-btn" value="">
+                    </form>
                     
                     <p class="parametr-name">Personalize</p>
 
@@ -280,20 +281,13 @@ class Program
 
                 <h3>Background</h3>
                 <select id="select-bg-type">
+                    <option></option>
                     <option>Photo</option>
                     <option>Color</option>
                     <option>Slides</option>
                 </select>
 
                 <div class="choosen">
-                    <h3>Choose a photo</h3>
-                    <div class="desktop-photos">
-                        <div class="desktop-photo" data-number="1"></div>
-                        <div class="desktop-photo" data-number="2"></div>
-                        <div class="desktop-photo" data-number="3"></div>
-                        <div class="desktop-photo" data-number="4"></div>
-                        <div class="desktop-photo" data-number="5"></div>
-                    </div>
                     <input type="file" id="select-desktop-image">
                     <label class="select-desktop-image-label" for="select-desktop-image">Обзор</label>
                 </div>
@@ -311,6 +305,10 @@ class Program
         this.giveAllFuncs(what)
         ChangeDesktopBgType();
         SelectNewColor();
+        document.querySelector('input.search-btn').addEventListener('click', (event) => {
+            event.preventDefault();
+            console.log('Searching...');
+        })
     }
     
     giveAllFuncs(what)

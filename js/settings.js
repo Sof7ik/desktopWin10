@@ -25,61 +25,66 @@ let colors = [
     '#4a5459'
 ];
 
+let photos = [
+    '../desktop-bg/DSC01142.JPG',
+    '../desktop-bg/ken_roczen_suzuki_2015.jpg',
+    '../desktop-bg/pepega.jpg',
+]
+
 const ChangeDesktopBgType = () =>
 {
-    selectBgDesktop = document.getElementById('select-bg-type');
-    // console.log(selectBgDesktop);
-    selectBgDesktop.addEventListener('change', (event) =>
+    selectBgDesktop = document.getElementById('select-bg-type'); //сам селект
+    selectBgDesktop.addEventListener('change', (event) =>       //при изменении
     {
-        value = event.target.options.selectedIndex;
-        choosen = document.querySelector('.choosen');
-        // console.log(event);
+        value = event.target.options.selectedIndex;             //чекаем, какой <option> выбран
+        choosen = document.querySelector('.choosen');           // блок с заголовком и цветами/фотографиями
         switch (value) {
-            case 0:
+            case 1: //value = 0 - фотки
                 choosen.innerHTML = 
-                `<h3>Choose a photo</h3>
-                    <div class="desktop-photos">
-                        <div class="desktop-photo" data-number="1"></div>
-                        <div class="desktop-photo" data-number="2"></div>
-                        <div class="desktop-photo" data-number="3"></div>
-                        <div class="desktop-photo" data-number="4"></div>
-                        <div class="desktop-photo" data-number="5"></div>
-                    </div>
-                    <input type="file" id="select-desktop-image">
-                    <label class="select-desktop-image-label" for="select-desktop-image">Обзор</label>
-                    `
-                console.log('value =', 0);
+                `
+                <h3 id="choose-photo">Choose a photo</h3>
+                <div class="desktop-photos">`
+                    photos.forEach(() => {
+                        document.querySelector('.desktop-photos').insertAdjacentHTML('beforeend',
+                        `<div class="desktop-photo"></div>`
+                    )})
+                    
+                    console.log( document.querySelectorAll('div.desktop-photo'));
+                    document.querySelectorAll('div.desktop-photo').forEach((element, index) => {
+                        console.log(index);
+                        element.style.backgroundImage = `url(${photos[index]})`;
+                        element.dataset.number = index;
+                    });
+                `</div>
+                <input type="file" id="select-desktop-image">
+                <label class="select-desktop-image-label" for="select-desktop-image">Обзор</label>
+                `
                 document.querySelector('h3.choose-pos').style.display = 'block';
                 document.getElementById('select-contain-type').style.display = 'block';
                 break;
             
-            case 1:
+            case 2: //value = 1 - сплошной цвет                                             
                 choosen.innerHTML = 
                 `
-                <h3>Choose a color</h3>
+                <h3 id="choose-color">Choose a color</h3>
                     <div class="desktop-colors">`
-                        colors.forEach(element => {
+                        colors.forEach(element => {     //создаем дивы
                             document.querySelector('.desktop-colors').insertAdjacentHTML('beforeend', 
                             `
                             <div class="desktop-color"></div>
                             `)
                         });
                 `</div>`;
-
                 
-
-                console.log('value =', 1);
-                
-                document.querySelectorAll('div.desktop-color').forEach( (item, index) => {
+                document.querySelectorAll('div.desktop-color').forEach( (item, index) => {  //закрашиваем дивы цветами из массива
                     item.style.backgroundColor = colors[index];
                     item.dataset.num = index;
                 })
-                document.querySelector('h3.choose-pos').style.display = 'none';
-                document.getElementById('select-contain-type').style.display = 'none';
-
+                document.querySelector('h3.choose-pos').style.display = 'none'; //скрваем нижний блок
+                document.getElementById('select-contain-type').style.display = 'none'; //скрваем нижний блок
                 break;
 
-            case 2:
+            case 3:
                 console.log('value =', 2);
                 break;
 
@@ -90,22 +95,49 @@ const ChangeDesktopBgType = () =>
     });
 }
 
-const clearCurrentColor = (elem) =>
+const changeBg = () =>
 {
-    let allCurrentColors = document.querySelectorAll('div.desktop-color-active');
-    allCurrentColors.forEach( (item) =>
+    
+    if(document.getElementById('choose-photo'))
     {
-        if(item.classList.contains('desktop-color-active')) {
-            item.classList.remove('desktop-color-active');
-            item.innerHTML = ``;
-        }
+        let newPhoto = document.querySelector('div.desktop-photo-active').style.backgroundImage;
+        document.querySelector('main').style.backgroundColor = '';
+        document.querySelector('main').style.backgroundImage = newPhoto;
+    }
 
-        elem.classList.add('desktop-color-active');
-        elem.innerHTML = `<div class="current-color">✓</div>`;
+    if(document.getElementById('choose-color'))
+    {
         let newColor = document.querySelector('div.desktop-color-active').style.backgroundColor;
         document.querySelector('main').style.backgroundImage = 'none';
         document.querySelector('main').style.backgroundColor = newColor;
-    })
+    }
+}
+
+const clearCurrentColor = (elem) =>
+{
+    
+
+    if(elem.classList.contains('desktop-color'))
+    {
+        let allCurrentColors = document.querySelectorAll('div.desktop-color-active');
+        allCurrentColors.forEach( (item) =>
+        {
+            item.classList.remove('desktop-color-active');
+            item.innerHTML = ``;
+        })
+
+        elem.classList.add('desktop-color-active')
+        elem.innerHTML = `<div class="current-color">✓</div>`;
+    }
+    if(elem.classList.contains('desktop-photo'))
+    {
+        let allCurrentColors = document.querySelectorAll('div.desktop-photo-active');
+        allCurrentColors.forEach( (item) =>
+        {
+            item.classList.remove('desktop-photo-active');
+        })
+        elem.classList.add('desktop-photo-active')
+    }
 }
 
 const SelectNewColor = () =>
@@ -113,15 +145,30 @@ const SelectNewColor = () =>
     choosen = document.querySelector('.choosen');
     document.querySelector('.choosen').addEventListener('click', () => {
 
-        if (event.target.dataset.num)
+        if(document.getElementById('choose-photo'))
         {
-            event.target.insertAdjacentHTML('afterbegin', `
-                <div class="current-color">✓</div>
-            `);
-            event.target.classList.add('desktop-color-active');
-            clearCurrentColor(event.target);
+            console.log('Выбор фото');
+            if (event.target.dataset.number)
+            {
+                console.log(event.target.dataset.number);
+                event.target.classList.add('desktop-photo-active');
+                clearCurrentColor(event.target);
+            }
         }
 
+        if(document.getElementById('choose-color'))
+        {
+            console.log('Выбор цвета');
+            if (event.target.dataset.num)
+            {
+                console.log(event.target.dataset.num);
+                event.target.insertAdjacentHTML('afterbegin', `
+                <div class="current-color">✓</div>
+                `);
+                event.target.classList.add('desktop-color-active');
+                clearCurrentColor(event.target);
+            }
+        }
+        changeBg();
     })
-
 }
