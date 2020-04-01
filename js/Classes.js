@@ -1,9 +1,10 @@
 class DesktopItem
 {
-    constructor()
+    constructor(id)
     {
         this.el = document.createElement('div');
-        this.el.classList.add('program');
+        this.el.classList.add('desktop-item');
+        this.el.dataset.idfile = id;
     }
    
     create(text, what) {
@@ -11,6 +12,7 @@ class DesktopItem
         this.img.setAttribute('alt', 'image');
 
         this.txt = document.createElement('span');
+        this.txt.classList.add('file-name');
         this.txt.innerText = text
 
         this.el.insertAdjacentElement('beforeend', this.img);
@@ -19,14 +21,16 @@ class DesktopItem
         if (what == 'folder')
         {
             this.el.classList.add('folder');
-            this.img.setAttribute('src', './folder.png');
+            this.img.setAttribute('src', '../icons/desktop-icons/folder.png');
+            this.img.classList.add('folder');
             
         } else if (what == 'txt') {
             this.el.classList.add('txt');
-            this.img.setAttribute('src', './txt.png');
+            this.img.setAttribute('src', '../icons/desktop-icons/txt.png');
+            this.img.classList.add('txt');
         }
 
-        document.querySelector('.container').insertAdjacentElement('beforeend', this.el);
+        document.querySelector('.desktop-wrapper').insertAdjacentElement('beforeend', this.el);
     }
 }
 
@@ -41,9 +45,10 @@ class Program
         zIndex++;
     }
 
-    openTxt(fileName, what)
+    openTxt(fileName, what, msg = '')
     {
-        aboutMeValue = `Привет, я учусь в Щелковской шараге на 3 курсе на web-разраба. Вроде как фулл стэк, но даже код для этого проекта я частично Ctrl+C — Ctrl+V...`;
+        aboutMeValue = msg;
+        // aboutMeValue = `Привет, я учусь в Щелковской шараге на 3 курсе на web-разраба. Вроде как фулл стэк, но даже код для этого проекта я частично Ctrl+C — Ctrl+V...`;
         this.element.insertAdjacentHTML('afterbegin', `
             <div class="title">
                 <div class="left-programm-title">

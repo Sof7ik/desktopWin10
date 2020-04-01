@@ -1,3 +1,5 @@
+let fileId;
+
 //закрытие программы
 const closeProgramm = (event) => {
     event.target.parentElement.parentElement.parentElement.remove();
@@ -25,7 +27,7 @@ const fullWindow = (event) =>
 const semiCloseWindow = (event) =>
 {
     let parentElement = event.target.parentElement.parentElement.parentElement;
-    parentElement.style.display = 'none';
+    parentElement.style.opacity = 0.3;
 }
 
 //функция выделения "файлов" при клике
@@ -62,7 +64,10 @@ const checkFileTypeOnDBLClick = (event) => {
     }
 
     if (target.classList.contains('txt')) {
-        new Program('notepad').openTxt(fileName, 'notepad');
+        fileId = target.dataset.idfile;
+        console.log('fileId', fileId);
+        console.log('fileId - 3', fileId - 3);
+        new Program('notepad').openTxt(fileName, 'notepad', filesFromDatabase[fileId - 3].file_msg);
     }
 
     if (target.classList.contains('folder')) {

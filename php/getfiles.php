@@ -1,7 +1,7 @@
 <?php
 require ('connection.php');
 
-$query = mysqli_query($link, "SELECT * FROM `files`;");
+$query = mysqli_query($link, "SELECT files.id, filename, type_name, file_msg FROM `files`, `types` WHERE files.type = types.id;");
 
 $query_result = mysqli_fetch_all($query, MYSQLI_ASSOC);
 
