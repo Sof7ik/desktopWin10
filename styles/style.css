@@ -69,6 +69,10 @@ span.programm-title
 
 nav.notepad-nav, nav.explorer-nav
 {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
     font-size: 13px;
     border-bottom: 1px solid rgba(199, 199, 199, 0.63);
     cursor: default;

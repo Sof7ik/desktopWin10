@@ -27,11 +27,77 @@ div.notepad
 nav.notepad-nav a.notepad-navigation-item
 {
     padding: 0px 7px;
+    position: relative;
 }
 
 nav.notepad-nav a.notepad-navigation-item:hover
 {
     background-color: rgba(147, 216, 255, 0.76);
+}
+
+a.notepad-navigation-item.file:hover ul.lists-wrapper
+{
+    display: flex;
+}
+
+ul.lists-wrapper:hover
+{
+    display: flex;
+}
+
+ul.lists-wrapper
+{
+    position: absolute;
+    left: 0;
+    top: 18px;
+    
+    z-index: 1000;
+    min-width: 263px;
+
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+
+    color: #000000;
+    background-color: #f2f2f2;
+    outline: 1px solid #cccccc;
+
+    display: none;
+
+    /* padding: 5px 0px 5px 15px; */
+}
+
+ul.lists-wrapper > li
+{
+    width: 100%;
+    padding: 5px 0px;
+    border-bottom: 2px solid #cccccc;
+}
+
+ul.lists-wrapper > li:last-child
+{
+    border-bottom: none;
+}
+
+ul.lists-wrapper > li > ul > li > span
+{
+    width: 100%;
+    display: inline-block;
+    text-indent: 20px;
+
+    color: #6d6d6d;
+}
+
+ul.lists-wrapper > li > ul > li > span:hover
+{
+    background-color: rgba(147, 216, 255, 0.76);
+}
+
+ul.lists-wrapper > li > ul > li > span.active_nav_item
+{
+    color: #000;
 }
 
 .programm-change-size 

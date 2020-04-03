@@ -55,7 +55,7 @@ class Program
                     <img class="programm-icon" src="./icons/programm-icons/notepad.png" alt="icon">
                     <span class="programm-title">${fileName} — Notepad</span>
                 </div>
-        
+
                 <div class="right-programm-title">
                     <span class="programm-change-size semi-close" style="color: #000;">—</span>
                     <img class="programm-change-size full-window" src="./icons/programm-icons/full-window.png" alt="full-window" style="color: transparent;">
@@ -65,7 +65,31 @@ class Program
             </div>
             
             <nav class="notepad-nav">
-                <a class="notepad-navigation-item">File</a>
+                <a class="notepad-navigation-item file">File  
+                    <ul class="lists-wrapper">
+                        <li>
+                            <ul>
+                                <li><span>Создать</span></li>
+                                <li><span>Открыть</span></li>
+                                <li><span class="active_nav_item">Сохранить</span></li>
+                                <li><span class="active_nav_item">Сохранить как...</span></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <ul>
+                                <li><span>Параметры страницы</span></li>
+                                <li><span>Печать</span></li>
+                            </ul>
+                            
+                        </li>
+                        <li>
+                            <ul>
+                                <li><span>Выход</span></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    
+                </a>
                 <a class="notepad-navigation-item">Edit</a>
                 <a class="notepad-navigation-item">Format</a>
                 <a class="notepad-navigation-item">View</a>
