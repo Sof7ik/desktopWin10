@@ -50,7 +50,6 @@ const makeDesktopContextMenu = (event) =>
     function createNewFile(){
         let newFile = document.createElement('div');
         newFile.classList.add('newFile');
-        newFile.insertAdjacentHTML('beforeend', ``);
 
         newFile.style.top = `${event.clientY + 153}px`;
         newFile.style.left = `${event.clientX + 299.5}px`;
@@ -64,7 +63,9 @@ const makeDesktopContextMenu = (event) =>
                 document.querySelector('.context-menu').addEventListener('mouseover', function contextMenu(){
 
                     console.log('1');
-                    removeNewFile();
+                    if(!(document.querySelector('.newFile') === null)){
+                        removeNewFile();
+                    }
                     document.querySelector('.context-menu').removeEventListener('mouseover', contextMenu);
 
                 })
