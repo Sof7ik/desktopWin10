@@ -10,6 +10,8 @@ const deleteContextMenus = () =>
 //открытие контекстного меню
 const makeDesktopContextMenu = (event) =>
 {
+    let bool = false;
+
     event.stopPropagation();
     event.preventDefault();
     
@@ -44,4 +46,55 @@ const makeDesktopContextMenu = (event) =>
     makeFileActive(event);
     
     mainElement.prepend(newDiv);
+
+    function createNewFile(){
+        let newFile = document.createElement('div');
+        newFile.classList.add('newFile');
+        newFile.insertAdjacentHTML('beforeend', ``);
+
+        newFile.style.top = `${event.clientY + 153}px`;
+        newFile.style.left = `${event.clientX + 299.5}px`;
+
+        mainElement.prepend(newFile);
+
+        if (bool == false)
+        {
+            document.querySelector('p.new').addEventListener('mouseleave', () => {
+                
+                document.querySelector('.context-menu').addEventListener('mouseover', function contextMenu(){
+
+                    console.log('1');
+                    removeNewFile();
+                    document.querySelector('.context-menu').removeEventListener('mouseover', contextMenu);
+
+                })
+
+                document.querySelector('.newFile').addEventListener('mouseover', () => {
+
+                    document.querySelector('.newFile').addEventListener('mouseleave', () => {
+                        
+                        console.log('2');
+                        removeNewFile();
+
+                    })
+
+                })
+
+            })
+            bool = true;
+        }
+
+    }
+
+    function showNewFile(){
+        document.querySelector('p.new').addEventListener('mouseover', () => {
+            createNewFile();
+        })
+    }
+
+    function removeNewFile(){
+        document.querySelector('.newFile').remove();
+    }
+
+    showNewFile();
 }
