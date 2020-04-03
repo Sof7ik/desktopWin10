@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="./styles/style.css">
     <link rel="stylesheet" href="./styles/desktop.css">
     <link rel="stylesheet" href="./styles/context-menu.css">
-    <link rel="stylesheet" href="./styles/boot-screen.css">
     <!-- Progs -->
     <link rel="stylesheet" href="./styles/notepad.css">
     <link rel="stylesheet" href="./styles/explorer.css">
@@ -26,118 +25,72 @@
 </head>
 <body>
 
-    <div class="container">
-        
-        <aside class="left-user-list">
-            <input type="search" name="" list="datalist1" style="width: 100%">
-            <datalist id="datalist1">
-                <option>Привет 1</option>
-                <option>Привет 2</option>
-                <option>Привет 3</option>
-                <option>Привет 4</option>
-                <option>Привет 5</option>
-            </datalist>
-
-            <ul class="user-list">
-                <li>
-                    <div class="user-list-person-wrapper">
-                        <div class="person-image">
-                            <img class="person-image" src="./icons/bootScreen/person.png" alt="person-avatar">
-                        </div>
-                        <span>Username</span>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="user-list-person-wrapper">
-                        <div class="person-image">
-                            <img class="person-image" src="./icons/bootScreen/person.png" alt="person-avatar">
-                        </div>
-                        <span>Username</span>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="user-list-person-wrapper">
-                        <div class="person-image">
-                            <img class="person-image" src="./icons/bootScreen/person.png" alt="person-avatar">
-                        </div>
-                        <span>Username</span>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="user-list-person-wrapper">
-                        <div class="person-image">
-                            <img class="person-image" src="./icons/bootScreen/person.png" alt="person-avatar">
-                        </div>
-                        <span>Username</span>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="user-list-person-wrapper">
-                        <div class="person-image">
-                            <img class="person-image" src="./icons/bootScreen/person.png" alt="person-avatar">
-                        </div>
-                        <span>Username</span>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="user-list-person-wrapper">
-                        <div class="person-image">
-                            <img class="person-image" src="./icons/bootScreen/person.png" alt="person-avatar">
-                        </div>
-                        <span>Username</span>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="user-list-person-wrapper">
-                        <div class="person-image">
-                            <img class="person-image" src="./icons/bootScreen/person.png" alt="person-avatar">
-                        </div>
-                        <span>Username</span>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="user-list-person-wrapper">
-                        <div class="person-image">
-                            <img class="person-image" src="./icons/bootScreen/person.png" alt="person-avatar">
-                        </div>
-                        <span>Username</span>
-                    </div>
-                </li>
-
-            </ul>
-        </aside>
-
-        <div class="bootScreen">
-            <div class="person-wrapper">
-                <div class="person-image">
-                    <img class="person-image" src="./icons/bootScreen/person.png" alt="person-avatar">
+    <main style="background-image:url('./desktop-bg/DSC01142.JPG');">
+        <div class="notepad">
+            <div class="title">
+                <div class="left-programm-title">
+                    <img class="programm-icon" src="./icons/programm-icons/notepad.png" alt="icon">
+                    <span class="programm-title">${fileName} — Notepad</span>
                 </div>
-                <span>Username</span>
+        
+                <div class="right-programm-title">
+                    <span class="programm-change-size semi-close" style="color: #000;">—</span>
+                    <img class="programm-change-size full-window" src="./icons/programm-icons/full-window.png" alt="full-window" style="color: transparent;">
+                    <!-- <img class="programm-change-size close" src="./icons/programm-icons/close.png" alt="close"> -->
+                    <span class="programm-change-size close" style="color: #000;">×</span>
+                </div>
             </div>
             
-            <form action="" method="POST" class="login-inputs">
-                <input type="password" name="user-password" id="user-password" autofocus required placeholder="Password">
-                <input type="submit" value="">
-            </form>
-        </div>
-    </div>
-
+            <nav class="notepad-nav">
+                <a class="notepad-navigation-item file">File  
+                    <ul class="lists-wrapper">
+                        <li>
+                            <ul>
+                                <li><span>Создать</span></li>
+                                <li><span>Открыть</span></li>
+                                <li><span class="active_nav_item">Сохранить</span></li>
+                                <li><span class="active_nav_item">Сохранить как...</span></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <ul>
+                                <li><span>Параметры страницы</span></li>
+                                <li><span>Печать</span></li>
+                            </ul>
+                            
+                        </li>
+                        <li>
+                            <ul>
+                                <li><span>Выход</span></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    
+                </a>
+                <a class="notepad-navigation-item">Edit</a>
+                <a class="notepad-navigation-item">Format</a>
+                <a class="notepad-navigation-item">View</a>
+                <a class="notepad-navigation-item">HELP</a>
+            </nav>
     
-
-    <!-- <main style="background-image:url('./desktop-bg/DSC01142.JPG');">
+            <div class="notepad-text">
+                <textarea name="notepad-message" id="" class="notepad-textarea" resize readonly>${aboutMeValue}</textarea>
+            </div>
+        </div>
+            <!--<div class="bin">
+    
+            </div> -->
     
             <div class="desktop-wrapper">
     
                 <div class="desktop-item bin">
                     <img class="bin" src="./icons/desktop-icons/bin.png" alt="Bin">
                     <span class="file-name">Корзина</span>
+                </div>
+    
+                <div class="desktop-item txt">
+                    <img class="txt" src="./icons/desktop-icons/txt.png" alt="Txt-file">
+                    <span class="file-name">aboutMe.txt</span>
                 </div>
     
                 <div class="desktop-item shortcut">
@@ -151,9 +104,9 @@
                 </div>
             </div>
         
-    </main> -->
+    </main>
 
-    <!-- <footer>
+    <footer>
         <section class="left-side-footer">
 
             <div class="task-panel-programm">
@@ -193,7 +146,7 @@
 
         </section>
        
-    </footer>  -->
+    </footer>
      <script>
 
         // function fullScreen(element) {
@@ -219,7 +172,7 @@
     </script>
     <script type="text/javascript" src="./js/Classes.js"></script>
     <script type="text/javascript" src="./js/context-menu.js"></script>
-    <script type="text/javascript" src="./js/explorer.js" id="id1"></script>
+    <script type="text/javascript" src="./js/explorer.js"></script>
     <script type="text/javascript" src="./js/footer.js"></script>
     <script type="text/javascript" src="./js/settings.js"></script>
     <script type="text/javascript" src="./js/desktop.js"></script>
