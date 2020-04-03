@@ -44,4 +44,32 @@ const makeDesktopContextMenu = (event) =>
     makeFileActive(event);
     
     mainElement.prepend(newDiv);
+
+    function createNewFile(){
+        let newFile = document.createElement('div');
+        newFile.classList.add('newFile');
+        newFile.insertAdjacentHTML('beforeend', ``);
+
+        newFile.style.top = `${event.clientY + 153}px`;
+        newFile.style.left = `${event.clientX + 299.5}px`;
+
+        mainElement.prepend(newFile);
+        console.log('1')
+
+        document.querySelector('p.new').addEventListener('mouseleave', () => {
+            removeNewFile();
+        })
+    }
+
+    function showNewFile(){
+        document.querySelector('p.new').addEventListener('mouseover', () => {
+            createNewFile();
+        })
+    }
+
+    function removeNewFile(){
+        console.log('2');
+    }
+
+    showNewFile();
 }

@@ -84,3 +84,10 @@ p.personalize::before
     height: 15px;
     margin-left: 5px;
 }
+
+div.newFile {
+    position: fixed;
+    width: 275px;
+    height: 35px;
+    background: red;
+}
