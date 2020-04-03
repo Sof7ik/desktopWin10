@@ -56,12 +56,30 @@ const makeDesktopContextMenu = (event) =>
         newFile.style.left = `${event.clientX + 299.5}px`;
 
         mainElement.prepend(newFile);
-        console.log('1')
 
         if (bool == false)
         {
             document.querySelector('p.new').addEventListener('mouseleave', () => {
-                removeNewFile();
+                
+                document.querySelector('.context-menu').addEventListener('mouseover', function contextMenu(){
+
+                    console.log('1');
+                    removeNewFile();
+                    document.querySelector('.context-menu').removeEventListener('mouseover', contextMenu);
+
+                })
+
+                document.querySelector('.newFile').addEventListener('mouseover', () => {
+
+                    document.querySelector('.newFile').addEventListener('mouseleave', () => {
+                        
+                        console.log('2');
+                        removeNewFile();
+
+                    })
+
+                })
+
             })
             bool = true;
         }
@@ -75,7 +93,7 @@ const makeDesktopContextMenu = (event) =>
     }
 
     function removeNewFile(){
-        console.log('2');
+        document.querySelector('.newFile').remove();
     }
 
     showNewFile();
