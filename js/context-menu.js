@@ -50,6 +50,7 @@ const makeDesktopContextMenu = (event) =>
     function createNewFile(){
         let newFile = document.createElement('div');
         newFile.classList.add('newFile');
+        // newFile.insertAdjacentHTML('beforeend', ``);
 
         newFile.style.top = `${event.clientY + 153}px`;
         newFile.style.left = `${event.clientX + 299.5}px`;
