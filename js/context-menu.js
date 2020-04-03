@@ -10,6 +10,8 @@ const deleteContextMenus = () =>
 //открытие контекстного меню
 const makeDesktopContextMenu = (event) =>
 {
+    let bool = false;
+
     event.stopPropagation();
     event.preventDefault();
     
@@ -56,9 +58,14 @@ const makeDesktopContextMenu = (event) =>
         mainElement.prepend(newFile);
         console.log('1')
 
-        document.querySelector('p.new').addEventListener('mouseleave', () => {
-            removeNewFile();
-        })
+        if (bool == false)
+        {
+            document.querySelector('p.new').addEventListener('mouseleave', () => {
+                removeNewFile();
+            })
+            bool = true;
+        }
+
     }
 
     function showNewFile(){
