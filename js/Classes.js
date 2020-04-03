@@ -65,11 +65,11 @@ class Program
             </div>
             
             <nav class="notepad-nav">
-                <span class="notepad-navigation-item">File</span>
-                <span class="notepad-navigation-item">Edit</span>
-                <span class="notepad-navigation-item">Format</span>
-                <span class="notepad-navigation-item">View</span>
-                <span class="notepad-navigation-item">HELP</span>
+                <a class="notepad-navigation-item">File</a>
+                <a class="notepad-navigation-item">Edit</a>
+                <a class="notepad-navigation-item">Format</a>
+                <a class="notepad-navigation-item">View</a>
+                <a class="notepad-navigation-item">HELP</a>
             </nav>
 
             <div class="notepad-text">

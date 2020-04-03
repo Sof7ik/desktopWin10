@@ -24,12 +24,12 @@ div.notepad
     color: #000;
 }
 
-nav.notepad-nav span.notepad-navigation-item
+nav.notepad-nav a.notepad-navigation-item
 {
     padding: 0px 7px;
 }
 
-nav.notepad-nav span.notepad-navigation-item:hover
+nav.notepad-nav a.notepad-navigation-item:hover
 {
     background-color: rgba(147, 216, 255, 0.76);
 }

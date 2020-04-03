@@ -34,9 +34,9 @@ fetch('../php/getfiles.php')
 })
 .then((jsonRes) => {
     filesFromDatabase = jsonRes;
-    console.log('arr', filesFromDatabase);
+    // console.log('arr', filesFromDatabase);
     jsonRes.forEach( (item) => {
-        console.log(item);
+        // console.log(item);
         // new Program().createTxt(item.filename, item.id);
         new DesktopItem(item.id).create(item.filename, item.type_name);
     })
