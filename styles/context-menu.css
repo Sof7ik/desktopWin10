@@ -82,14 +82,57 @@ p.personalize::before
 div.newFile {
     position: fixed;
     width: 275px;
-    height: 35px;
-    background: red;
+    height: 33px;
 
-    top: 155px;
-    left: 303px;
+
+    background-color: #2b2b2b;
+    color: #fff;
+
+    /* top: 155px;
+    left: 303px; */
 
     display: flex;
     flex-flow: colum nowrap;
     justify-content: flex-start;
     align-items: center;
+}
+
+span.new-desktop-item
+{
+    position: relative;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+
+    font-size: 14px;
+
+    transition: all .2s;
+
+    width: 100%;
+
+    padding: 2px 0px 2px 25px;
+}
+
+span.new-desktop-item.txt::before
+{
+    content: '';
+    position: absolute;
+    left: 5px;
+
+    background-image: url('../icons/desktop-icons/txt.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+
+    width: 18px;
+    height: 18px;
+
+    display: inline-block;
+
+}
+
+span.new-desktop-item:hover
+{
+    background-color: #414141;
 }

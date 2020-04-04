@@ -1,5 +1,8 @@
 //let bool = false;
 
+// счеткик номеров файлов
+// let counter = 1;
+
 //скрытие контекстного меню
 const deleteContextMenus = () =>
 {
@@ -7,6 +10,9 @@ const deleteContextMenus = () =>
     allContexts.forEach( (item) => {
         item.remove();
     })
+    if(!(document.querySelector('.newFile') === null)){
+        document.querySelector('.newFile').remove();
+    }
 }
 
 //открытие контекстного меню
@@ -51,13 +57,23 @@ const makeDesktopContextMenu = (event) =>
 
     //добавляет подпункт "Создать новый текстовый файл"
     function createNewFile(){
+        let counter = 1; //счетчик файлов
         let newFile = document.createElement('div');
         newFile.classList.add('newFile');
+        newFile.insertAdjacentHTML('afterbegin', 
+        `
+            <span class="new-desktop-item txt">Текстовый документ</span>
+        `);
 
         newFile.style.top = `${event.clientY + 153}px`;
         newFile.style.left = `${event.clientX + 300}px`;
 
         mainElement.prepend(newFile);
+
+        newFile.addEventListener('click', () => {
+            new DesktopItem().create(`Новый текстовый документ ${counter}`, 'txt');
+            counter++;
+        })
 
         function contextMenu(event){
 
@@ -76,16 +92,16 @@ const makeDesktopContextMenu = (event) =>
                 
                 document.querySelector('.context-menu').addEventListener('mouseover', contextMenu) //добавляем событие наведения на контекстное меню
 
-                document.querySelector('.newFile').addEventListener('mouseover', () => {
+                // document.querySelector('.newFile').addEventListener('mouseover', () => {
 
-                    document.querySelector('.newFile').addEventListener('mouseleave', () => {
+                //     document.querySelector('.newFile').addEventListener('mouseleave', () => {
                         
-                        console.log('2');
-                        removeNewFile();
+                //         console.log('2');
+                //         removeNewFile();
 
-                    })
+                //     })
 
-                })
+                // })
 
             })
             
