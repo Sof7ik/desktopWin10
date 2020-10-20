@@ -1,5 +1,5 @@
 //подмена картинок "Пуск"
-const swapWinLogo = () => {
+export const swapWinLogo = () => {
     document.querySelector('div.task-panel-programm').addEventListener('mouseover', (event) => {
         document.querySelector('img.win').setAttribute('src', './icons/left-panel/win/win-blue.png');
     })
@@ -9,9 +9,10 @@ const swapWinLogo = () => {
 }
 
 //функция получения и вывода времени
-const setDate = () => {
+export const setDate = () => {
     //выводим время
-    date = new Date();
+    let date = new Date();
+    let minutes, hours, seconds, day, month;
 
     //чекаем, если часов меньше 10 (однозначное число), то добавлячем 0;
     date.getMinutes() < 10 ? minutes = "0" + date.getMinutes() : minutes = date.getMinutes();

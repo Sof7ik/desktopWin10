@@ -82,8 +82,7 @@ p.personalize::before
 div.newFile {
     position: fixed;
     width: 275px;
-    height: 33px;
-
+    /* height: 33px; */
 
     background-color: #2b2b2b;
     color: #fff;
@@ -91,8 +90,10 @@ div.newFile {
     /* top: 155px;
     left: 303px; */
 
+    padding: 5px;
+
     display: flex;
-    flex-flow: colum nowrap;
+    flex-flow: column nowrap;
     justify-content: flex-start;
     align-items: center;
 }
@@ -112,15 +113,21 @@ span.new-desktop-item
     width: 100%;
 
     padding: 2px 0px 2px 25px;
+
+    margin-bottom: 5px;
 }
 
-span.new-desktop-item.txt::before
+div.newFile span.new-desktop-item:last-child
+{
+    margin-bottom: unset;
+}
+
+span.new-desktop-item::before
 {
     content: '';
     position: absolute;
     left: 5px;
 
-    background-image: url('../icons/desktop-icons/txt.png');
     background-repeat: no-repeat;
     background-position: center center;
     background-size: contain;
@@ -129,10 +136,19 @@ span.new-desktop-item.txt::before
     height: 18px;
 
     display: inline-block;
-
 }
 
 span.new-desktop-item:hover
 {
     background-color: #414141;
+}
+
+span.new-desktop-item.txt::before
+{
+    background-image: url('../icons/desktop-icons/txt.png');
+}
+
+span.new-desktop-item.folder::before
+{
+    background-image: url('../icons/desktop-icons/folder.png');
 }

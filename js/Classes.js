@@ -1,4 +1,18 @@
-class DesktopItem
+import { 
+    clearActiveElements, 
+    closeProgramm, 
+    fullWindow, 
+    semiCloseWindow 
+    } from './desktop';
+
+import {
+    ChangeDesktopBgType,
+    SelectNewColor
+} from './settings';
+
+import { swapExplorerArrows } from './explorer';
+
+export class DesktopItem
 {
     constructor(id)
     {
@@ -34,10 +48,10 @@ class DesktopItem
     }
 }
 
-class Program
+export class Program
 {
     //what MUST BE like "explorer", "notepad", "browser", "settings" so like classes in CSS
-    constructor(what)
+    constructor(what, zIndex = 2)
     {
         this.element = document.createElement('div');
         this.element.classList.add(what, 'activeProg');
@@ -45,9 +59,49 @@ class Program
         zIndex++;
     }
 
+    //создаем передвижение программ
+    dragElement(elmnt) {
+        var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+        if (document.querySelector('div.left-programm-title')) {
+        /* if present, the header is where you move the DIV from:*/
+        document.querySelector('div.left-programm-title').onmousedown = dragMouseDown;
+        } else {
+        /* otherwise, move the DIV from anywhere inside the DIV:*/
+        elmnt.onmousedown = dragMouseDown;
+        }
+    
+        function dragMouseDown(e) {
+        e = e || window.event;
+        // get the mouse cursor position at startup:
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        document.onmouseup = closeDragElement;
+        // call a function whenever the cursor moves:
+        document.onmousemove = elementDrag;
+        }
+    
+        function elementDrag(e) {
+        e = e || window.event;
+        // calculate the new cursor position:
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        // set the element's new position:
+        elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+        }
+    
+        function closeDragElement() {
+        /* stop moving when mouse button is released:*/
+        document.onmouseup = null;
+        document.onmousemove = null;
+        }
+    }
+
     openTxt(fileName, what, msg = '')
     {
-        aboutMeValue = msg;
+        let aboutMeValue = msg;
         // aboutMeValue = `Привет, я учусь в Щелковской шараге на 3 курсе на web-разраба. Вроде как фулл стэк, но даже код для этого проекта я частично Ctrl+C — Ctrl+V...`;
         this.element.insertAdjacentHTML('afterbegin', `
             <div class="title">
@@ -342,8 +396,9 @@ class Program
     
     giveAllFuncs(what)
     {
+        const mainElement = document.querySelector('main');
         mainElement.insertAdjacentElement('afterbegin', this.element);
-        dragElement(document.querySelector(`div.${what}`));
+        this.dragElement(document.querySelector(`div.${what}`));
         clearActiveElements();
         document.querySelector('span.close').addEventListener('click', closeProgramm);
         document.querySelector('img.full-window').addEventListener('click', fullWindow);

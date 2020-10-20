@@ -3,8 +3,25 @@
 // счеткик номеров файлов
 // let counter = 1;
 
+const mainElement = document.querySelector('main');
+
+import {clearActiveElements, makeFileActive} from './desktop';
+import { DesktopItem } from './Classes';
+
+const insertFileToDb = (fileType, fileName) => {
+    let formData = new FormData();
+    
+    formData.append('fileType', fileType);
+    formData.append('fileName', fileName);
+
+    fetch('./../php/newFile.php', {
+        method: 'POST',
+        body: formData
+    })
+}
+
 //скрытие контекстного меню
-const deleteContextMenus = () =>
+export const deleteContextMenus = () =>
 {
     let allContexts = document.querySelectorAll('div.context-menu');
     allContexts.forEach( (item) => {
@@ -16,7 +33,7 @@ const deleteContextMenus = () =>
 }
 
 //открытие контекстного меню
-const makeDesktopContextMenu = (event) =>
+export const makeDesktopContextMenu = (event) =>
 {
     let bool = false;
     // event.stopPropagation();
@@ -63,6 +80,7 @@ const makeDesktopContextMenu = (event) =>
         newFile.insertAdjacentHTML('afterbegin', 
         `
             <span class="new-desktop-item txt">Текстовый документ</span>
+            <span class="new-desktop-item folder">Папка</span>
         `);
 
         newFile.style.top = `${event.clientY + 153}px`;
@@ -70,10 +88,10 @@ const makeDesktopContextMenu = (event) =>
 
         mainElement.prepend(newFile);
 
-        newFile.addEventListener('click', () => {
-            new DesktopItem().create(`Новый текстовый документ ${counter}`, 'txt');
-            counter++;
-        })
+        // newFile.addEventListener('click', () => {
+        //     new DesktopItem().create(`Новый текстовый документ ${counter}`, 'txt');
+        //     counter++;
+        // })
 
         function contextMenu(event){
 
@@ -89,22 +107,8 @@ const makeDesktopContextMenu = (event) =>
         if (bool == false)
         {
             document.querySelector('p.new').addEventListener('mouseleave', () => {  //выход мыши с "New"
-                
                 document.querySelector('.context-menu').addEventListener('mouseover', contextMenu) //добавляем событие наведения на контекстное меню
-
-                // document.querySelector('.newFile').addEventListener('mouseover', () => {
-
-                //     document.querySelector('.newFile').addEventListener('mouseleave', () => {
-                        
-                //         console.log('2');
-                //         removeNewFile();
-
-                //     })
-
-                // })
-
             })
-            
             bool = true;
         }
 
@@ -122,4 +126,3 @@ const makeDesktopContextMenu = (event) =>
 
     showNewFile();
 }
-

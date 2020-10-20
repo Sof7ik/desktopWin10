@@ -1,4 +1,3 @@
-let selectBgDesktop, value, choosen;
 let colors = [
     '#ff8c00', 
     '#e81123', 
@@ -31,13 +30,13 @@ let photos = [
     '../desktop-bg/pepega.jpg',
 ]
 
-const ChangeDesktopBgType = () =>
+export const ChangeDesktopBgType = () =>
 {
-    selectBgDesktop = document.getElementById('select-bg-type'); //сам селект
+    const selectBgDesktop = document.getElementById('select-bg-type'); //сам селект
     selectBgDesktop.addEventListener('change', (event) =>       //при изменении
     {
-        value = event.target.options.selectedIndex;             //чекаем, какой <option> выбран
-        choosen = document.querySelector('.choosen');           // блок с заголовком и цветами/фотографиями
+        let value = event.target.options.selectedIndex;             //чекаем, какой <option> выбран
+        let choosen = document.querySelector('.choosen');           // блок с заголовком и цветами/фотографиями
         switch (value) {
             case 1: //value = 0 - фотки
                 choosen.innerHTML = 
@@ -140,9 +139,8 @@ const clearCurrentColor = (elem) =>
     }
 }
 
-const SelectNewColor = () =>
+export const SelectNewColor = () =>
 {
-    choosen = document.querySelector('.choosen');
     document.querySelector('.choosen').addEventListener('click', () => {
 
         if(document.getElementById('choose-photo'))
