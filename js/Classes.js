@@ -11,6 +11,7 @@ import {
 } from './settings';
 
 import { swapExplorerArrows } from './explorer';
+import { URLHandler } from './browser';
 
 export class DesktopItem
 {
@@ -264,7 +265,7 @@ export class Program
                     <img src="./icons/programm-icons/redo.png" alt="redo" class="up-arrow search-arrow">
                 </div>
                 <div class="browser-search">
-                    <input type="text" name="" class="browser-search" placeholder="Введите поисковой запрос в Google или укажите URL">
+                    <input type="text" name="" class="browser-search" placeholder="Введите поисковой запрос в Google или укажите URL" value="">
                 </div>
                 <div class="addons">
                     <div class="addon" data-addon-id="1"></div>
@@ -281,6 +282,7 @@ export class Program
             </div>
         `);
         this.giveAllFuncs(what);
+        URLHandler();
     }
 
     openBin(what)

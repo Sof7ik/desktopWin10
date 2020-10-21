@@ -57,7 +57,7 @@ export const clearActiveElements = () => {
 }
 
 const getFilesFromDB = async () => {
-    return await fetch('../php/getfiles.php');
+    return await fetch('../php/getfiles.php'); 
 }
 
 export const renderFiles = () => {
@@ -72,8 +72,6 @@ export const renderFiles = () => {
 
 //проверяем, на что кликнули - ярлык, папка, текстовый документ
 export const checkFileTypeOnDBLClick = (event) => {
-    let filesFromDatabase;
-
     getFilesFromDB()
     .then(res => {
         return res.json();
@@ -98,7 +96,7 @@ export const checkFileTypeOnDBLClick = (event) => {
         }
 
         if (target.classList.contains('shortcut')) {
-            new Program('browser').openBrowser('https://youtube.com/', 'browser');
+            new Program('browser').openBrowser('https://vk.com/', 'browser');
         }
 
         if (target.classList.contains('desktop-settings'))

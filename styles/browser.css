@@ -108,6 +108,7 @@ input.browser-search
 input.browser-search:focus
 {
     border: 2px solid rgb(47, 0, 177);
+    cursor: text;
 }
 
 div.browser-search::before

@@ -48,7 +48,7 @@ export const ChangeDesktopBgType = () =>
                         `<div class="desktop-photo"></div>`
                     )})
                     
-                    console.log( document.querySelectorAll('div.desktop-photo'));
+                    // console.log( document.querySelectorAll('div.desktop-photo'));
                     document.querySelectorAll('div.desktop-photo').forEach((element, index) => {
                         console.log(index);
                         element.style.backgroundImage = `url(${photos[index]})`;
