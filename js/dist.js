@@ -192,6 +192,7 @@ const checkFileTypeOnDBLClick = event => {
   getFilesFromDB().then(res => {
     return res.json();
   }).then(filesFromDatabase => {
+    console.log(filesFromDatabase);
     let target = event.target.parentElement;
     let fileName = target.lastElementChild.textContent;
 
@@ -201,9 +202,9 @@ const checkFileTypeOnDBLClick = event => {
 
     if (target.classList.contains('txt')) {
       fileId = target.dataset.idfile;
-      console.log('fileId', fileId);
-      console.log('fileId - 3', fileId - 3);
-      new _Classes__WEBPACK_IMPORTED_MODULE_1__["Program"]('notepad').openTxt(fileName, 'notepad', filesFromDatabase[fileId - 3].file_msg);
+      console.log('fileId', fileId); // console.log('fileId - 3', fileId - 3);
+
+      new _Classes__WEBPACK_IMPORTED_MODULE_1__["Program"]('notepad').openTxt(fileName, 'notepad', filesFromDatabase[fileId - 1].file_msg, filesFromDatabase[fileId - 1].isNew);
     }
 
     if (target.classList.contains('folder')) {
@@ -211,7 +212,7 @@ const checkFileTypeOnDBLClick = event => {
     }
 
     if (target.classList.contains('shortcut')) {
-      new _Classes__WEBPACK_IMPORTED_MODULE_1__["Program"]('browser').openBrowser('https://vk.com/', 'browser');
+      new _Classes__WEBPACK_IMPORTED_MODULE_1__["Program"]('browser').openBrowser('https://forum.auto.ru', 'browser');
     }
 
     if (target.classList.contains('desktop-settings')) {
@@ -229,24 +230,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteContextMenus", function() { return deleteContextMenus; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "makeDesktopContextMenu", function() { return makeDesktopContextMenu; });
 /* harmony import */ var _desktop__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
-/* harmony import */ var _Classes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3);
-//let bool = false;
-// счеткик номеров файлов
-// let counter = 1;
 const mainElement = document.querySelector('main');
-
-
-
-const insertFileToDb = (fileType, fileName) => {
-  let formData = new FormData();
-  formData.append('fileType', fileType);
-  formData.append('fileName', fileName);
-  fetch('./../php/newFile.php', {
-    method: 'POST',
-    body: formData
-  });
-}; //скрытие контекстного меню
-
+ //скрытие контекстного меню
 
 const deleteContextMenus = () => {
   let allContexts = document.querySelectorAll('div.context-menu');
@@ -257,7 +242,40 @@ const deleteContextMenus = () => {
   if (!(document.querySelector('.newFile') === null)) {
     document.querySelector('.newFile').remove();
   }
+};
+
+const prepareFileInfo = (fileType, fileName) => {
+  let formData = new FormData();
+  console.log('fileType', fileType);
+  console.log('fileType', fileName);
+
+  if (fileName.trim() !== '') {
+    formData.append('fileName', fileName);
+  } else {
+    throw new Error('Пустое имя файла!');
+  }
+
+  if (typeof fileType === 'number') {
+    if (fileType !== 0) {
+      formData.append('fileType', fileType);
+    } else {
+      throw new Error('Неизвестный тип файла!');
+    }
+  } else {
+    throw new Error('Тип файла передан в неправильном формате!');
+  }
+
+  return formData;
+};
+
+const insertFileToDb = async (fileTypeToPrepare, fileNameToPpepare) => {
+  await fetch('/php/newFile.php', {
+    method: 'POST',
+    body: prepareFileInfo(fileTypeToPrepare, fileNameToPpepare)
+  }).then(res => res.json()).then(json => console.log(json));
+  Object(_desktop__WEBPACK_IMPORTED_MODULE_0__["renderFiles"])();
 }; //открытие контекстного меню
+
 
 const makeDesktopContextMenu = event => {
   let bool = false; // event.stopPropagation();
@@ -289,34 +307,67 @@ const makeDesktopContextMenu = event => {
   deleteContextMenus();
   Object(_desktop__WEBPACK_IMPORTED_MODULE_0__["clearActiveElements"])();
   Object(_desktop__WEBPACK_IMPORTED_MODULE_0__["makeFileActive"])(event);
-  mainElement.prepend(newDiv); //добавляет подпункт "Создать новый текстовый файл"
+  mainElement.prepend(newDiv);
+
+  function generateNewFile() {
+    //счетчик файлов
+    function counterFunc(counter) {
+      let innerCounter = counter;
+      return function () {
+        return ++innerCounter;
+      };
+    }
+
+    const folderCounter = counterFunc(0);
+    const txtCounter = counterFunc(0);
+    document.querySelectorAll('div.newFile span.new-desktop-item').forEach(button => {
+      button.addEventListener('click', e => {
+        let fileType = parseInt(e.target.dataset.dbtype, 10);
+        let fileName = '',
+            tempFileId = 0;
+
+        switch (e.target.classList[1]) {
+          case 'txt':
+            tempFileId = txtCounter();
+            fileName = `Новый текстовый документ ${tempFileId}`;
+            break;
+
+          case 'folder':
+            tempFileId = folderCounter();
+            fileName = `Новая папка ${tempFileId}`;
+
+          default:
+            break;
+        }
+
+        insertFileToDb(fileType, fileName);
+      });
+    });
+  } //добавляет подпункт "Создать новый текстовый файл"
+
 
   function createNewFile() {
-    let counter = 1; //счетчик файлов
-
     let newFile = document.createElement('div');
     newFile.classList.add('newFile');
     newFile.insertAdjacentHTML('afterbegin', `
-            <span class="new-desktop-item txt">Текстовый документ</span>
-            <span class="new-desktop-item folder">Папка</span>
+            <span class="new-desktop-item txt" data-dbtype="1">Текстовый документ</span>
+            <span class="new-desktop-item folder" data-dbtype="2">Папка</span>
         `);
     newFile.style.top = `${event.clientY + 153}px`;
     newFile.style.left = `${event.clientX + 300}px`;
-    mainElement.prepend(newFile); // newFile.addEventListener('click', () => {
-    //     new DesktopItem().create(`Новый текстовый документ ${counter}`, 'txt');
-    //     counter++;
-    // })
+    mainElement.prepend(newFile);
 
     function contextMenu(event) {
-      console.log('1');
-      console.log(event.target);
-
+      // console.log('1');
+      // console.log(event.target);
       if (!(document.querySelector('.newFile') === null)) {
         removeNewFile();
       }
 
       document.querySelector('.context-menu').removeEventListener('mouseover', contextMenu);
     }
+
+    generateNewFile();
 
     if (bool == false) {
       document.querySelector('p.new').addEventListener('mouseleave', () => {
@@ -388,11 +439,12 @@ class DesktopItem {
 }
 class Program {
   //what MUST BE like "explorer", "notepad", "browser", "settings" so like classes in CSS
-  constructor(what, zIndex = 2) {
+  constructor(what) {
+    this.Zindex = 2;
     this.element = document.createElement('div');
     this.element.classList.add(what, 'activeProg');
-    this.element.style.zIndex = zIndex;
-    zIndex++;
+    this.element.style.zIndex = this.zIndex;
+    this.zIndex++;
   } //создаем передвижение программ
 
 
@@ -439,9 +491,11 @@ class Program {
     }
   }
 
-  openTxt(fileName, what, msg = '') {
-    let aboutMeValue = msg; // aboutMeValue = `Привет, я учусь в Щелковской шараге на 3 курсе на web-разраба. Вроде как фулл стэк, но даже код для этого проекта я частично Ctrl+C — Ctrl+V...`;
+  openTxt(fileName, what, msg = '', isNew) {
+    let aboutMeValue = '';
+    msg === null ? aboutMeValue = '' : aboutMeValue = msg; // aboutMeValue = `Привет, я учусь в Щелковской шараге на 3 курсе на web-разраба. Вроде как фулл стэк, но даже код для этого проекта я частично Ctrl+C — Ctrl+V...`;
 
+    this.element.dataset.isNew = isNew === 1 ? '1' : '0';
     this.element.insertAdjacentHTML('afterbegin', `
             <div class="title">
                 <div class="left-programm-title">
@@ -462,10 +516,10 @@ class Program {
                     <ul class="lists-wrapper">
                         <li>
                             <ul>
-                                <li><span>Создать</span></li>
-                                <li><span>Открыть</span></li>
-                                <li><span class="active_nav_item">Сохранить</span></li>
-                                <li><span class="active_nav_item">Сохранить как...</span></li>
+                                <li><span class="notepad-menu-item">Создать</span></li>
+                                <li><span class="notepad-menu-item">Открыть</span></li>
+                                <li><span class="active_nav_item notepad-menu-item" id="notepad-save-document">Сохранить</span></li>
+                                <li><span class="active_nav_item notepad-menu-item" id="notepad-saveAs-document">Сохранить как...</span></li>
                             </ul>
                         </li>
                         <li>
@@ -490,7 +544,7 @@ class Program {
             </nav>
 
             <div class="notepad-text">
-                <textarea name="notepad-message" id="" class="notepad-textarea" resize readonly>${aboutMeValue}</textarea>
+                <textarea name="notepad-message" id="" class="notepad-textarea" resize>${aboutMeValue}</textarea>
             </div>
         `);
     this.giveAllFuncs(what);
@@ -583,7 +637,7 @@ class Program {
             <div class="browser-title">
                 <div class="left-programm-title left-browser-title">
                     <div class="browser-tab">
-                        <p class="tab-name">Новая вкладка</p>
+                        <p class="tab-name">${link}</p>
                     </div>
                 </div>
                     
@@ -601,7 +655,7 @@ class Program {
                     <img src="./icons/programm-icons/redo.png" alt="redo" class="up-arrow search-arrow">
                 </div>
                 <div class="browser-search">
-                    <input type="text" name="" class="browser-search" placeholder="Введите поисковой запрос в Google или укажите URL" value="">
+                    <input type="text" name="" class="browser-search" placeholder="Введите поисковой запрос в Google или укажите URL" value=${link}>
                 </div>
                 <div class="addons">
                     <div class="addon" data-addon-id="1"></div>

@@ -59,7 +59,6 @@ export const URLHandler = () =>
             }
 
             console.log('urlArray после преобразования адреса: ', urlArray);
-
         }
     })
 }

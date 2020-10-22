@@ -52,12 +52,13 @@ export class DesktopItem
 export class Program
 {
     //what MUST BE like "explorer", "notepad", "browser", "settings" so like classes in CSS
-    constructor(what, zIndex = 2)
+    constructor(what)
     {
+        this.Zindex = 2;
         this.element = document.createElement('div');
         this.element.classList.add(what, 'activeProg');
-        this.element.style.zIndex = zIndex;
-        zIndex++;
+        this.element.style.zIndex = this.zIndex;
+        this.zIndex++;
     }
 
     //создаем передвижение программ
@@ -100,10 +101,16 @@ export class Program
         }
     }
 
-    openTxt(fileName, what, msg = '')
+    openTxt(fileName, what, msg = '', isNew)
     {
-        let aboutMeValue = msg;
+        let aboutMeValue = '';
+
+        msg === null ? aboutMeValue = '' : aboutMeValue = msg;
+
         // aboutMeValue = `Привет, я учусь в Щелковской шараге на 3 курсе на web-разраба. Вроде как фулл стэк, но даже код для этого проекта я частично Ctrl+C — Ctrl+V...`;
+
+        this.element.dataset.isNew = isNew === 1 ? '1' : '0';
+
         this.element.insertAdjacentHTML('afterbegin', `
             <div class="title">
                 <div class="left-programm-title">
@@ -124,10 +131,10 @@ export class Program
                     <ul class="lists-wrapper">
                         <li>
                             <ul>
-                                <li><span>Создать</span></li>
-                                <li><span>Открыть</span></li>
-                                <li><span class="active_nav_item">Сохранить</span></li>
-                                <li><span class="active_nav_item">Сохранить как...</span></li>
+                                <li><span class="notepad-menu-item">Создать</span></li>
+                                <li><span class="notepad-menu-item">Открыть</span></li>
+                                <li><span class="active_nav_item notepad-menu-item" id="notepad-save-document">Сохранить</span></li>
+                                <li><span class="active_nav_item notepad-menu-item" id="notepad-saveAs-document">Сохранить как...</span></li>
                             </ul>
                         </li>
                         <li>
@@ -152,7 +159,7 @@ export class Program
             </nav>
 
             <div class="notepad-text">
-                <textarea name="notepad-message" id="" class="notepad-textarea" resize readonly>${aboutMeValue}</textarea>
+                <textarea name="notepad-message" id="" class="notepad-textarea" resize>${aboutMeValue}</textarea>
             </div>
         `); 
         this.giveAllFuncs(what);
@@ -247,7 +254,7 @@ export class Program
             <div class="browser-title">
                 <div class="left-programm-title left-browser-title">
                     <div class="browser-tab">
-                        <p class="tab-name">Новая вкладка</p>
+                        <p class="tab-name">${link}</p>
                     </div>
                 </div>
                     
@@ -265,7 +272,7 @@ export class Program
                     <img src="./icons/programm-icons/redo.png" alt="redo" class="up-arrow search-arrow">
                 </div>
                 <div class="browser-search">
-                    <input type="text" name="" class="browser-search" placeholder="Введите поисковой запрос в Google или укажите URL" value="">
+                    <input type="text" name="" class="browser-search" placeholder="Введите поисковой запрос в Google или укажите URL" value=${link}>
                 </div>
                 <div class="addons">
                     <div class="addon" data-addon-id="1"></div>

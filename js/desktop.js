@@ -77,6 +77,9 @@ export const checkFileTypeOnDBLClick = (event) => {
         return res.json();
     })
     .then(filesFromDatabase => {
+
+        console.log(filesFromDatabase);
+
         let target = event.target.parentElement;
         let fileName = target.lastElementChild.textContent;
         if (target.classList.contains('bin')) {
@@ -87,8 +90,8 @@ export const checkFileTypeOnDBLClick = (event) => {
         if (target.classList.contains('txt')) {
             fileId = target.dataset.idfile;
             console.log('fileId', fileId);
-            console.log('fileId - 3', fileId - 3);
-            new Program('notepad').openTxt(fileName, 'notepad', filesFromDatabase[fileId - 3].file_msg);
+            // console.log('fileId - 3', fileId - 3);
+            new Program('notepad').openTxt(fileName, 'notepad', filesFromDatabase[fileId-1].file_msg, filesFromDatabase[fileId-1].isNew);
         }
 
         if (target.classList.contains('folder')) {
@@ -96,7 +99,7 @@ export const checkFileTypeOnDBLClick = (event) => {
         }
 
         if (target.classList.contains('shortcut')) {
-            new Program('browser').openBrowser('https://vk.com/', 'browser');
+            new Program('browser').openBrowser('https://forum.auto.ru', 'browser');
         }
 
         if (target.classList.contains('desktop-settings'))

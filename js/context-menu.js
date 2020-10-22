@@ -1,24 +1,6 @@
-//let bool = false;
-
-// счеткик номеров файлов
-// let counter = 1;
-
 const mainElement = document.querySelector('main');
 
-import {clearActiveElements, makeFileActive} from './desktop';
-import { DesktopItem } from './Classes';
-
-const insertFileToDb = (fileType, fileName) => {
-    let formData = new FormData();
-    
-    formData.append('fileType', fileType);
-    formData.append('fileName', fileName);
-
-    fetch('./../php/newFile.php', {
-        method: 'POST',
-        body: formData
-    })
-}
+import {clearActiveElements, makeFileActive, renderFiles} from './desktop';
 
 //скрытие контекстного меню
 export const deleteContextMenus = () =>
@@ -30,6 +12,46 @@ export const deleteContextMenus = () =>
     if(!(document.querySelector('.newFile') === null)){
         document.querySelector('.newFile').remove();
     }
+}
+
+const prepareFileInfo = (fileType, fileName) =>
+{
+    let formData = new FormData();
+
+    console.log('fileType', fileType);
+    console.log('fileType', fileName);
+
+    if (fileName.trim() !== '') 
+    {
+        formData.append('fileName', fileName);
+    } else {
+        throw new Error('Пустое имя файла!')
+    }
+
+    if (typeof fileType === 'number')
+    {
+        if (fileType !== 0) {
+            formData.append('fileType', fileType);
+        } else
+        {
+            throw new Error('Неизвестный тип файла!')
+        }
+    } else {
+        throw new Error('Тип файла передан в неправильном формате!')
+    }
+    
+    return formData;
+}
+
+const insertFileToDb = async (fileTypeToPrepare, fileNameToPpepare) => {
+    await fetch('/php/newFile.php', {
+        method: 'POST',
+        body: prepareFileInfo(fileTypeToPrepare, fileNameToPpepare)
+    })
+    .then(res => res.json())
+    .then(json => console.log(json))
+
+    renderFiles();
 }
 
 //открытие контекстного меню
@@ -71,16 +93,51 @@ export const makeDesktopContextMenu = (event) =>
     
     mainElement.prepend(newDiv);
 
+    function generateNewFile() {
+        //счетчик файлов
+        function counterFunc (counter) {
+            let innerCounter = counter;
+            return function () {
+                return ++innerCounter;
+            }
+        }
+
+        const folderCounter = counterFunc(0);
+        const txtCounter = counterFunc(0);
+
+        document.querySelectorAll('div.newFile span.new-desktop-item')
+        .forEach(button => {
+            button.addEventListener('click', (e) => {
+                let fileType = parseInt(e.target.dataset.dbtype, 10);
+                let fileName = '', tempFileId = 0;
+
+                switch (e.target.classList[1]) {
+                    case 'txt':
+                        tempFileId = txtCounter();
+                        fileName = `Новый текстовый документ ${tempFileId}`;
+                        break;
+
+                    case 'folder':
+                        tempFileId = folderCounter();
+                        fileName = `Новая папка ${tempFileId}`;
+                    default:
+                        break;
+                }
+
+                insertFileToDb(fileType, fileName);
+            })
+        })
+    }
 
     //добавляет подпункт "Создать новый текстовый файл"
-    function createNewFile(){
-        let counter = 1; //счетчик файлов
+    function createNewFile()
+    {
         let newFile = document.createElement('div');
         newFile.classList.add('newFile');
         newFile.insertAdjacentHTML('afterbegin', 
         `
-            <span class="new-desktop-item txt">Текстовый документ</span>
-            <span class="new-desktop-item folder">Папка</span>
+            <span class="new-desktop-item txt" data-dbtype="1">Текстовый документ</span>
+            <span class="new-desktop-item folder" data-dbtype="2">Папка</span>
         `);
 
         newFile.style.top = `${event.clientY + 153}px`;
@@ -88,21 +145,18 @@ export const makeDesktopContextMenu = (event) =>
 
         mainElement.prepend(newFile);
 
-        // newFile.addEventListener('click', () => {
-        //     new DesktopItem().create(`Новый текстовый документ ${counter}`, 'txt');
-        //     counter++;
-        // })
-
         function contextMenu(event){
 
-            console.log('1');
-            console.log(event.target);
+            // console.log('1');
+            // console.log(event.target);
             if(!(document.querySelector('.newFile') === null)){
                 removeNewFile();
             }
             document.querySelector('.context-menu').removeEventListener('mouseover', contextMenu);
 
         }
+
+        generateNewFile();
 
         if (bool == false)
         {
