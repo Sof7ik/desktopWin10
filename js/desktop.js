@@ -1,37 +1,70 @@
 let fileId;
 
-import { deleteContextMenus } from './context-menu';
+import { deleteContextMenus, makeDesktopContextMenu, makeFileContextMenu } from './context-menu';
 import { Program, DesktopItem } from './Classes';
 
-//закрытие программы
-export const closeProgramm = (event) => {
-    event.target.parentElement.parentElement.parentElement.remove();
+export function getUserInfo (url) {
+    // console.log(url);    
+    //long function
+
+    // const allParams = url.split('?');
+    // const params = allParams[1].split('&');
+    // let paramsObject = {};
+    // let tempArray = [];
+    // params.forEach((param, index) => {
+    //     tempArray[index] = [...param.split('=')];
+    // })
+    // tempArray.forEach(param => {
+    //     paramsObject[param[0]] = param[1];
+    // })
+    // console.log('long functioon result');
+    // console.log(paramsObject);
+
+    //short function
+    let paramsObject1 = {};
+
+    const params1 = url.split('?')[1].split('&');
+
+    params1.forEach(param => {
+        paramsObject1[param.split('=')[0]] = param.split('=')[1];
+    })
+
+    // console.log('short function result');
+    // console.log(paramsObject1);
+    console.log('paramsObject1', paramsObject1);
+    return paramsObject1;
 }
 
-export const fullWindow = (event) =>
+export async function getUserConfig(id)
 {
-    let parentElement = event.target.parentElement.parentElement.parentElement;
-    if (parentElement.style.height == '100vh' && parentElement.style.width == '100vw')
-    {
-        console.log("parentElement.style.height == '100vh' && parentElement.style.width == '100vw'");
-        parentElement.style.top = '7%';
-        parentElement.style.left = '14%';
-        parentElement.style.height = '50%';
-        parentElement.style.width = '60%';
-    } else {
-        console.log("parentElement.style.height !== '100vh' && parentElement.style.width !== '100vw'");
-        parentElement.style.top = '0px';
-        parentElement.style.left = '0px';
-        parentElement.style.height = '100vh';
-        parentElement.style.width = '100vw';
-    }
+    await fetch(`./../php/getConfig.php?id=${id}`)
+    .then(res => res.json())
+    .then(jsoned => {
+        if (jsoned !== null)
+        {
+            //фото или цвет ?
+            //разбиваем строку по '.' (отделяем расширение файла от названия)
+            let image = jsoned.bg.split('.');
+
+            //если это картинка, то элементов в массиве будет 2
+            //если цвет, то один
+            if (image.length > 1)
+            {
+                document.querySelector('main').style.backgroundImage = `url('./desktop-bg/${jsoned.bg}')`;
+            } else
+            {
+                document.querySelector('main').style.backgroundImage = '';
+                document.querySelector('main').style.backgroundColor = jsoned.bg;
+            }
+        }
+        else
+        {
+            console.warn('bg is null')
+        }
+    })
 }
-    
-export const semiCloseWindow = (event) =>
-{
-    let parentElement = event.target.parentElement.parentElement.parentElement;
-    parentElement.style.opacity = 0.3;
-}
+
+getUserConfig(getUserInfo(window.location.href).id)
 
 //функция выделения "файлов" при клике
 export const makeFileActive = (event) => {
@@ -57,17 +90,22 @@ export const clearActiveElements = () => {
 }
 
 const getFilesFromDB = async () => {
-    return await fetch('../php/getfiles.php'); 
+    return await fetch(`../php/getfiles.php?id=${getUserInfo(window.location.href).id}`);
 }
 
-export const renderFiles = () => {
-    getFilesFromDB()
+export const renderFiles = async () => {
+    await getFilesFromDB()
     .then(res => res.json())
     .then(items => {
         items.forEach(file => {
-            new DesktopItem(file.id).create(file.filename, file.type_name);
+            new DesktopItem(file.fileId).create(file.filename, file.type_name);
         });
     })
+    .finally(
+        () => 
+        document.querySelectorAll('div.desktop-item').forEach(item => item.addEventListener('contextmenu', makeFileContextMenu))
+    )
+    .catch(error => console.error(error))
 }
 
 //проверяем, на что кликнули - ярлык, папка, текстовый документ
@@ -78,7 +116,7 @@ export const checkFileTypeOnDBLClick = (event) => {
     })
     .then(filesFromDatabase => {
 
-        console.log(filesFromDatabase);
+        // console.log(filesFromDatabase);
 
         let target = event.target.parentElement;
         let fileName = target.lastElementChild.textContent;
@@ -91,7 +129,7 @@ export const checkFileTypeOnDBLClick = (event) => {
             fileId = target.dataset.idfile;
             console.log('fileId', fileId);
             // console.log('fileId - 3', fileId - 3);
-            new Program('notepad').openTxt(fileName, 'notepad', filesFromDatabase[fileId-1].file_msg, filesFromDatabase[fileId-1].isNew);
+            new Program('notepad').openTxt(fileName, 'notepad', filesFromDatabase[fileId-3].file_msg);
         }
 
         if (target.classList.contains('folder')) {

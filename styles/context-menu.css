@@ -10,10 +10,15 @@ div.context-menu
 
 }
 
-ul.context-menu 
+ul.context-menu-item 
 {
     border-bottom: 1px solid #fff;
     padding: 5px 0px;
+}
+
+div.context-menu ul.context-menu-item:last-child
+{
+    border-bottom: unset;
 }
 
 ul.third

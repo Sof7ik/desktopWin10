@@ -1,9 +1,4 @@
-import { 
-    clearActiveElements, 
-    closeProgramm, 
-    fullWindow, 
-    semiCloseWindow 
-    } from './desktop';
+import { clearActiveElements } from './desktop';
 
 import {
     ChangeDesktopBgType,
@@ -25,6 +20,7 @@ export class DesktopItem
     create(text, what) {
         this.img = document.createElement('img');
         this.img.setAttribute('alt', 'image');
+        this.img.classList.add('file-image');
 
         this.txt = document.createElement('span');
         this.txt.classList.add('file-name');
@@ -38,6 +34,7 @@ export class DesktopItem
             this.el.classList.add('folder');
             this.img.setAttribute('src', '../icons/desktop-icons/folder.png');
             this.img.classList.add('folder');
+            
             
         } else if (what == 'txt') {
             this.el.classList.add('txt');
@@ -101,7 +98,7 @@ export class Program
         }
     }
 
-    openTxt(fileName, what, msg = '', isNew)
+    openTxt(fileName, what, msg = '', isNew = 0)
     {
         let aboutMeValue = '';
 
@@ -380,8 +377,13 @@ export class Program
                 </select>
 
                 <div class="choosen">
-                    <input type="file" id="select-desktop-image">
-                    <label class="select-desktop-image-label" for="select-desktop-image">Обзор</label>
+                    <form enctype="multipart/form-data" action="./php/files.php" method="POST">
+                        <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+                        <input type="file" id="select-desktop-image" name="bgImage">
+                        <label class="select-desktop-image-label" for="select-desktop-image">Обзор</label>
+
+                        <input type="submit">
+                    </form>
                 </div>
 
                 <h3 class="choose-pos">Choose position</h3>
@@ -394,13 +396,46 @@ export class Program
                 
             </aside>
         `)
-        this.giveAllFuncs(what)
+        this.giveAllFuncs(what);
         ChangeDesktopBgType();
         SelectNewColor();
         document.querySelector('input.search-btn').addEventListener('click', (event) => {
             event.preventDefault();
             console.log('Searching...');
         })
+    }
+
+    //закрытие программы
+    closeProgramm (event) 
+    {
+        event.target.parentElement.parentElement.parentElement.remove();
+    }
+
+    //развёртывание на полный экран
+    fullWindow (event) 
+    {
+        let parentElement = event.target.parentElement.parentElement.parentElement;
+        if (parentElement.style.height == '100vh' && parentElement.style.width == '100vw')
+        {
+            console.log("parentElement.style.height == '100vh' && parentElement.style.width == '100vw'");
+            parentElement.style.top = '7%';
+            parentElement.style.left = '14%';
+            parentElement.style.height = '50%';
+            parentElement.style.width = '60%';
+        } else {
+            console.log("parentElement.style.height !== '100vh' && parentElement.style.width !== '100vw'");
+            parentElement.style.top = '0px';
+            parentElement.style.left = '0px';
+            parentElement.style.height = '100vh';
+            parentElement.style.width = '100vw';
+        }
+    }
+
+    //сворачивание окна
+    semiCloseWindow (event)
+    {
+        let parentElement = event.target.parentElement.parentElement.parentElement;
+        parentElement.style.opacity = 0.3;
     }
     
     giveAllFuncs(what)
@@ -409,11 +444,10 @@ export class Program
         mainElement.insertAdjacentElement('afterbegin', this.element);
         this.dragElement(document.querySelector(`div.${what}`));
         clearActiveElements();
-        document.querySelector('span.close').addEventListener('click', closeProgramm);
-        document.querySelector('img.full-window').addEventListener('click', fullWindow);
-        document.querySelector('span.semi-close').addEventListener('click', semiCloseWindow);
+        document.querySelector('span.close').addEventListener('click', this.closeProgramm);
+        document.querySelector('img.full-window').addEventListener('click', this.fullWindow);
+        document.querySelector('span.semi-close').addEventListener('click', this.semiCloseWindow);
     }
-
 }
 
 // document.getElementById('createFolder').addEventListener('click', () => {

@@ -1,6 +1,6 @@
 const mainElement = document.querySelector('main');
 
-import {clearActiveElements, makeFileActive, renderFiles} from './desktop';
+import {clearActiveElements, makeFileActive, renderFiles, getUserInfo} from './desktop';
 
 //скрытие контекстного меню
 export const deleteContextMenus = () =>
@@ -14,12 +14,17 @@ export const deleteContextMenus = () =>
     }
 }
 
+// функция проверки правильности свойств файла (название, тип)
+// принимает в себя тип файла из data-атрибута, сгенерированное в замисимости от типа имя файла
+// проверяет, пустое ли имя файла, в правильном ли типе (должен быть Int > 0) пришел тип файла
+// возвращает сгенерированный объект FormData для отправки с помощью AJAX.
 const prepareFileInfo = (fileType, fileName) =>
 {
     let formData = new FormData();
 
     console.log('fileType', fileType);
     console.log('fileType', fileName);
+    console.log('userId', getUserInfo(window.location.href).id);
 
     if (fileName.trim() !== '') 
     {
@@ -39,10 +44,17 @@ const prepareFileInfo = (fileType, fileName) =>
     } else {
         throw new Error('Тип файла передан в неправильном формате!')
     }
+
+    formData.append('id', getUserInfo(window.location.href).id);
     
     return formData;
 }
 
+/*
+функция добавления файла в БД.
+Принимает в себя имя файла, и тип файла, которые отдает на проверку функции, описанной выше, 
+в поле data получает от неё { FormData }
+*/
 const insertFileToDb = async (fileTypeToPrepare, fileNameToPpepare) => {
     await fetch('/php/newFile.php', {
         method: 'POST',
@@ -54,30 +66,72 @@ const insertFileToDb = async (fileTypeToPrepare, fileNameToPpepare) => {
     renderFiles();
 }
 
+export const makeFileContextMenu = (event) => {
+    event.preventDefault();
+
+    let newFileContextMenu = document.createElement('div');
+    newFileContextMenu.classList.add('context-menu');
+    newFileContextMenu.insertAdjacentHTML('afterbegin',
+    `
+        <ul class="context-menu-item first">
+            <li><p class="context-item" style="font-weight: bold;">Открыть</p></li>
+        </ul>
+            
+        <ul class="context-menu-item second">
+            <li><p class="context-item">Закрепить на панели задач</p></li>
+        </ul>
+        
+        <ul class="context-menu-item third">
+            <li><p class="context-item delete">Удалить</p></li>
+            <li><p class="context-item rename">Переименовать</p></li>
+        </ul>
+    `);
+
+    newFileContextMenu.style.top = `${event.clientY}px`;
+    newFileContextMenu.style.left = `${event.clientX}px`;
+
+    deleteContextMenus();
+    clearActiveElements();
+    makeFileActive(event);
+
+    mainElement.prepend(newFileContextMenu);
+}
+
 //открытие контекстного меню
 export const makeDesktopContextMenu = (event) =>
 {
+    // console.log(event.target);
+
+    //чтобы на файлы тыкая не появлялась контекстая менюшка раюочего стола
+    if (
+        event.target.classList.contains('desktop-item') ||
+        event.target.tagName == 'IMG' ||
+        event.target.tagName == 'SPAN'
+    ) {
+        return;
+    }
+
     let bool = false;
-    // event.stopPropagation();
+    event.stopPropagation();
     event.preventDefault();
     
     let newDiv = document.createElement('div');
     newDiv.classList.add('context-menu')
     newDiv.insertAdjacentHTML('afterbegin',
     `
-    <ul class="context-menu first">
+    <ul class="context-menu-item first">
         <li><p class="context-item view">View</p></li>
         <li><p class="context-item sort">Sort by</p></li>
         <li><p class="context-item refresh">Refresh</p></li>
     </ul>
     
-    <ul class="context-menu second">
+    <ul class="context-menu-item second">
         <li><p class="context-item paste">Paste</p></li>
         <li><p class="context-item paste-shortcut">Paste shortcut</p></li>
     </ul>
 
     
-    <ul class="context-menu third">
+    <ul class="context-menu-item third">
         <p class="context-item new">New</p>
     </ul>
 

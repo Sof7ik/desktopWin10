@@ -103,13 +103,13 @@ setInterval(() => {
   Object(_footer__WEBPACK_IMPORTED_MODULE_1__["setDate"])();
 }, 1000);
 Object(_footer__WEBPACK_IMPORTED_MODULE_1__["setDate"])();
-mainElement.addEventListener('click', _desktop__WEBPACK_IMPORTED_MODULE_0__["makeFileActive"]);
-mainElement.addEventListener('dblclick', _desktop__WEBPACK_IMPORTED_MODULE_0__["checkFileTypeOnDBLClick"]);
-document.querySelectorAll('*').forEach(item => {
+document.querySelectorAll('*:not(.desktop-item)').forEach(item => {
   item.addEventListener('contextmenu', _context_menu__WEBPACK_IMPORTED_MODULE_2__["makeDesktopContextMenu"]);
 });
-Object(_footer__WEBPACK_IMPORTED_MODULE_1__["swapWinLogo"])();
 Object(_desktop__WEBPACK_IMPORTED_MODULE_0__["renderFiles"])();
+mainElement.addEventListener('click', _desktop__WEBPACK_IMPORTED_MODULE_0__["makeFileActive"]);
+mainElement.addEventListener('dblclick', _desktop__WEBPACK_IMPORTED_MODULE_0__["checkFileTypeOnDBLClick"]);
+Object(_footer__WEBPACK_IMPORTED_MODULE_1__["swapWinLogo"])();
 
 /***/ }),
 /* 1 */
@@ -117,9 +117,8 @@ Object(_desktop__WEBPACK_IMPORTED_MODULE_0__["renderFiles"])();
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "closeProgramm", function() { return closeProgramm; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fullWindow", function() { return fullWindow; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "semiCloseWindow", function() { return semiCloseWindow; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getUserInfo", function() { return getUserInfo; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getUserConfig", function() { return getUserConfig; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "makeFileActive", function() { return makeFileActive; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearActiveElements", function() { return clearActiveElements; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "renderFiles", function() { return renderFiles; });
@@ -128,32 +127,53 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Classes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3);
 let fileId;
 
- //закрытие программы
 
-const closeProgramm = event => {
-  event.target.parentElement.parentElement.parentElement.remove();
-};
-const fullWindow = event => {
-  let parentElement = event.target.parentElement.parentElement.parentElement;
+function getUserInfo(url) {
+  // console.log(url);    
+  //long function
+  // const allParams = url.split('?');
+  // const params = allParams[1].split('&');
+  // let paramsObject = {};
+  // let tempArray = [];
+  // params.forEach((param, index) => {
+  //     tempArray[index] = [...param.split('=')];
+  // })
+  // tempArray.forEach(param => {
+  //     paramsObject[param[0]] = param[1];
+  // })
+  // console.log('long functioon result');
+  // console.log(paramsObject);
+  //short function
+  let paramsObject1 = {};
+  const params1 = url.split('?')[1].split('&');
+  params1.forEach(param => {
+    paramsObject1[param.split('=')[0]] = param.split('=')[1];
+  }); // console.log('short function result');
+  // console.log(paramsObject1);
 
-  if (parentElement.style.height == '100vh' && parentElement.style.width == '100vw') {
-    console.log("parentElement.style.height == '100vh' && parentElement.style.width == '100vw'");
-    parentElement.style.top = '7%';
-    parentElement.style.left = '14%';
-    parentElement.style.height = '50%';
-    parentElement.style.width = '60%';
-  } else {
-    console.log("parentElement.style.height !== '100vh' && parentElement.style.width !== '100vw'");
-    parentElement.style.top = '0px';
-    parentElement.style.left = '0px';
-    parentElement.style.height = '100vh';
-    parentElement.style.width = '100vw';
-  }
-};
-const semiCloseWindow = event => {
-  let parentElement = event.target.parentElement.parentElement.parentElement;
-  parentElement.style.opacity = 0.3;
-}; //функция выделения "файлов" при клике
+  console.log('paramsObject1', paramsObject1);
+  return paramsObject1;
+}
+async function getUserConfig(id) {
+  await fetch(`./../php/getConfig.php?id=${id}`).then(res => res.json()).then(jsoned => {
+    if (jsoned !== null) {
+      //фото или цвет ?
+      //разбиваем строку по '.' (отделяем расширение файла от названия)
+      let image = jsoned.bg.split('.'); //если это картинка, то элементов в массиве будет 2
+      //если цвет, то один
+
+      if (image.length > 1) {
+        document.querySelector('main').style.backgroundImage = `url('./desktop-bg/${jsoned.bg}')`;
+      } else {
+        document.querySelector('main').style.backgroundImage = '';
+        document.querySelector('main').style.backgroundColor = jsoned.bg;
+      }
+    } else {
+      console.warn('bg is null');
+    }
+  });
+}
+getUserConfig(getUserInfo(window.location.href).id); //функция выделения "файлов" при клике
 
 const makeFileActive = event => {
   let target = event.target.parentElement;
@@ -177,22 +197,22 @@ const clearActiveElements = () => {
 };
 
 const getFilesFromDB = async () => {
-  return await fetch('../php/getfiles.php');
+  return await fetch(`../php/getfiles.php?id=${getUserInfo(window.location.href).id}`);
 };
 
-const renderFiles = () => {
-  getFilesFromDB().then(res => res.json()).then(items => {
+const renderFiles = async () => {
+  await getFilesFromDB().then(res => res.json()).then(items => {
     items.forEach(file => {
-      new _Classes__WEBPACK_IMPORTED_MODULE_1__["DesktopItem"](file.id).create(file.filename, file.type_name);
+      new _Classes__WEBPACK_IMPORTED_MODULE_1__["DesktopItem"](file.fileId).create(file.filename, file.type_name);
     });
-  });
+  }).finally(() => document.querySelectorAll('div.desktop-item').forEach(item => item.addEventListener('contextmenu', _context_menu__WEBPACK_IMPORTED_MODULE_0__["makeFileContextMenu"]))).catch(error => console.error(error));
 }; //проверяем, на что кликнули - ярлык, папка, текстовый документ
 
 const checkFileTypeOnDBLClick = event => {
   getFilesFromDB().then(res => {
     return res.json();
   }).then(filesFromDatabase => {
-    console.log(filesFromDatabase);
+    // console.log(filesFromDatabase);
     let target = event.target.parentElement;
     let fileName = target.lastElementChild.textContent;
 
@@ -204,7 +224,7 @@ const checkFileTypeOnDBLClick = event => {
       fileId = target.dataset.idfile;
       console.log('fileId', fileId); // console.log('fileId - 3', fileId - 3);
 
-      new _Classes__WEBPACK_IMPORTED_MODULE_1__["Program"]('notepad').openTxt(fileName, 'notepad', filesFromDatabase[fileId - 1].file_msg, filesFromDatabase[fileId - 1].isNew);
+      new _Classes__WEBPACK_IMPORTED_MODULE_1__["Program"]('notepad').openTxt(fileName, 'notepad', filesFromDatabase[fileId - 3].file_msg);
     }
 
     if (target.classList.contains('folder')) {
@@ -228,6 +248,7 @@ const checkFileTypeOnDBLClick = event => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteContextMenus", function() { return deleteContextMenus; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "makeFileContextMenu", function() { return makeFileContextMenu; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "makeDesktopContextMenu", function() { return makeDesktopContextMenu; });
 /* harmony import */ var _desktop__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 const mainElement = document.querySelector('main');
@@ -242,12 +263,16 @@ const deleteContextMenus = () => {
   if (!(document.querySelector('.newFile') === null)) {
     document.querySelector('.newFile').remove();
   }
-};
+}; // функция проверки правильности свойств файла (название, тип)
+// принимает в себя тип файла из data-атрибута, сгенерированное в замисимости от типа имя файла
+// проверяет, пустое ли имя файла, в правильном ли типе (должен быть Int > 0) пришел тип файла
+// возвращает сгенерированный объект FormData для отправки с помощью AJAX.
 
 const prepareFileInfo = (fileType, fileName) => {
   let formData = new FormData();
   console.log('fileType', fileType);
   console.log('fileType', fileName);
+  console.log('userId', Object(_desktop__WEBPACK_IMPORTED_MODULE_0__["getUserInfo"])(window.location.href).id);
 
   if (fileName.trim() !== '') {
     formData.append('fileName', fileName);
@@ -265,8 +290,15 @@ const prepareFileInfo = (fileType, fileName) => {
     throw new Error('Тип файла передан в неправильном формате!');
   }
 
+  formData.append('id', Object(_desktop__WEBPACK_IMPORTED_MODULE_0__["getUserInfo"])(window.location.href).id);
   return formData;
 };
+/*
+функция добавления файла в БД.
+Принимает в себя имя файла, и тип файла, которые отдает на проверку функции, описанной выше, 
+в поле data получает от неё { FormData }
+*/
+
 
 const insertFileToDb = async (fileTypeToPrepare, fileNameToPpepare) => {
   await fetch('/php/newFile.php', {
@@ -274,29 +306,60 @@ const insertFileToDb = async (fileTypeToPrepare, fileNameToPpepare) => {
     body: prepareFileInfo(fileTypeToPrepare, fileNameToPpepare)
   }).then(res => res.json()).then(json => console.log(json));
   Object(_desktop__WEBPACK_IMPORTED_MODULE_0__["renderFiles"])();
+};
+
+const makeFileContextMenu = event => {
+  event.preventDefault();
+  let newFileContextMenu = document.createElement('div');
+  newFileContextMenu.classList.add('context-menu');
+  newFileContextMenu.insertAdjacentHTML('afterbegin', `
+        <ul class="context-menu-item first">
+            <li><p class="context-item" style="font-weight: bold;">Открыть</p></li>
+        </ul>
+            
+        <ul class="context-menu-item second">
+            <li><p class="context-item">Закрепить на панели задач</p></li>
+        </ul>
+        
+        <ul class="context-menu-item third">
+            <li><p class="context-item delete">Удалить</p></li>
+            <li><p class="context-item rename">Переименовать</p></li>
+        </ul>
+    `);
+  newFileContextMenu.style.top = `${event.clientY}px`;
+  newFileContextMenu.style.left = `${event.clientX}px`;
+  deleteContextMenus();
+  Object(_desktop__WEBPACK_IMPORTED_MODULE_0__["clearActiveElements"])();
+  Object(_desktop__WEBPACK_IMPORTED_MODULE_0__["makeFileActive"])(event);
+  mainElement.prepend(newFileContextMenu);
 }; //открытие контекстного меню
 
-
 const makeDesktopContextMenu = event => {
-  let bool = false; // event.stopPropagation();
+  // console.log(event.target);
+  //чтобы на файлы тыкая не появлялась контекстая менюшка раюочего стола
+  if (event.target.classList.contains('desktop-item') || event.target.tagName == 'IMG' || event.target.tagName == 'SPAN') {
+    return;
+  }
 
+  let bool = false;
+  event.stopPropagation();
   event.preventDefault();
   let newDiv = document.createElement('div');
   newDiv.classList.add('context-menu');
   newDiv.insertAdjacentHTML('afterbegin', `
-    <ul class="context-menu first">
+    <ul class="context-menu-item first">
         <li><p class="context-item view">View</p></li>
         <li><p class="context-item sort">Sort by</p></li>
         <li><p class="context-item refresh">Refresh</p></li>
     </ul>
     
-    <ul class="context-menu second">
+    <ul class="context-menu-item second">
         <li><p class="context-item paste">Paste</p></li>
         <li><p class="context-item paste-shortcut">Paste shortcut</p></li>
     </ul>
 
     
-    <ul class="context-menu third">
+    <ul class="context-menu-item third">
         <p class="context-item new">New</p>
     </ul>
 
@@ -417,6 +480,7 @@ class DesktopItem {
   create(text, what) {
     this.img = document.createElement('img');
     this.img.setAttribute('alt', 'image');
+    this.img.classList.add('file-image');
     this.txt = document.createElement('span');
     this.txt.classList.add('file-name');
     this.txt.innerText = text;
@@ -491,7 +555,7 @@ class Program {
     }
   }
 
-  openTxt(fileName, what, msg = '', isNew) {
+  openTxt(fileName, what, msg = '', isNew = 0) {
     let aboutMeValue = '';
     msg === null ? aboutMeValue = '' : aboutMeValue = msg; // aboutMeValue = `Привет, я учусь в Щелковской шараге на 3 курсе на web-разраба. Вроде как фулл стэк, но даже код для этого проекта я частично Ctrl+C — Ctrl+V...`;
 
@@ -760,8 +824,13 @@ class Program {
                 </select>
 
                 <div class="choosen">
-                    <input type="file" id="select-desktop-image">
-                    <label class="select-desktop-image-label" for="select-desktop-image">Обзор</label>
+                    <form enctype="multipart/form-data" action="./php/files.php" method="POST">
+                        <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+                        <input type="file" id="select-desktop-image" name="bgImage">
+                        <label class="select-desktop-image-label" for="select-desktop-image">Обзор</label>
+
+                        <input type="submit">
+                    </form>
                 </div>
 
                 <h3 class="choose-pos">Choose position</h3>
@@ -781,6 +850,36 @@ class Program {
       event.preventDefault();
       console.log('Searching...');
     });
+  } //закрытие программы
+
+
+  closeProgramm(event) {
+    event.target.parentElement.parentElement.parentElement.remove();
+  } //развёртывание на полный экран
+
+
+  fullWindow(event) {
+    let parentElement = event.target.parentElement.parentElement.parentElement;
+
+    if (parentElement.style.height == '100vh' && parentElement.style.width == '100vw') {
+      console.log("parentElement.style.height == '100vh' && parentElement.style.width == '100vw'");
+      parentElement.style.top = '7%';
+      parentElement.style.left = '14%';
+      parentElement.style.height = '50%';
+      parentElement.style.width = '60%';
+    } else {
+      console.log("parentElement.style.height !== '100vh' && parentElement.style.width !== '100vw'");
+      parentElement.style.top = '0px';
+      parentElement.style.left = '0px';
+      parentElement.style.height = '100vh';
+      parentElement.style.width = '100vw';
+    }
+  } //сворачивание окна
+
+
+  semiCloseWindow(event) {
+    let parentElement = event.target.parentElement.parentElement.parentElement;
+    parentElement.style.opacity = 0.3;
   }
 
   giveAllFuncs(what) {
@@ -788,9 +887,9 @@ class Program {
     mainElement.insertAdjacentElement('afterbegin', this.element);
     this.dragElement(document.querySelector(`div.${what}`));
     Object(_desktop__WEBPACK_IMPORTED_MODULE_0__["clearActiveElements"])();
-    document.querySelector('span.close').addEventListener('click', _desktop__WEBPACK_IMPORTED_MODULE_0__["closeProgramm"]);
-    document.querySelector('img.full-window').addEventListener('click', _desktop__WEBPACK_IMPORTED_MODULE_0__["fullWindow"]);
-    document.querySelector('span.semi-close').addEventListener('click', _desktop__WEBPACK_IMPORTED_MODULE_0__["semiCloseWindow"]);
+    document.querySelector('span.close').addEventListener('click', this.closeProgramm);
+    document.querySelector('img.full-window').addEventListener('click', this.fullWindow);
+    document.querySelector('span.semi-close').addEventListener('click', this.semiCloseWindow);
   }
 
 } // document.getElementById('createFolder').addEventListener('click', () => {
@@ -808,8 +907,34 @@ class Program {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ChangeDesktopBgType", function() { return ChangeDesktopBgType; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectNewColor", function() { return SelectNewColor; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "imageHandler", function() { return imageHandler; });
+/* harmony import */ var _desktop__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+
 let colors = ['#ff8c00', '#e81123', '#d13438', '#c30052', '#bf0077', '#9a0089', '#881798', '#744da9', '#10893e', '#107c10', '#018574', '#2d7d9a', '#0063b1', '#6b69d6', '#8e8cd8', '#8764b8', '#038387', '#486860', '#525e54', '#7e735f', '#4c4a48', '#515c6b', '#4a5459'];
 let photos = ['../desktop-bg/DSC01142.JPG', '../desktop-bg/ken_roczen_suzuki_2015.jpg', '../desktop-bg/pepega.jpg'];
+
+class DesktopPhoto {
+  constructor(index) {
+    this.elem = document.createElement('div');
+    this.elem.dataset.number = index;
+  }
+
+  createPhoto(imageUrl) {
+    this.elem.classList.add('desktop-photo');
+    this.elem.backgroundImage = `url(${imageUrl})`;
+  }
+
+  createColor(color) {
+    this.elem.classList.add('desktop-photo');
+    this.elem.backgroundColor = color;
+  }
+
+  render() {
+    const renderTo_Elem = document.querySelector('.choosen');
+  }
+
+}
+
 const ChangeDesktopBgType = () => {
   const selectBgDesktop = document.getElementById('select-bg-type'); //сам селект
 
@@ -822,38 +947,39 @@ const ChangeDesktopBgType = () => {
     switch (value) {
       case 1:
         //value = 0 - фотки
-        choosen.innerHTML = `
-                <h3 id="choose-photo">Choose a photo</h3>
-                <div class="desktop-photos">`;
+        choosen.innerHTML = `<h3 id="choose-photo">Choose a photo</h3>
+                <div class="desktop-photos"></div>
+                <form enctype="multipart/form-data" action="./php/files.php" method="POST">
+                    <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+                    <input type="file" id="select-desktop-image" name="bgImage">
+                    <label class="select-desktop-image-label" for="select-desktop-image">Обзор</label>
+
+                    <input type="submit">
+                </form>
+                `;
+        document.querySelector('h3.choose-pos').style.display = 'block';
+        document.getElementById('select-contain-type').style.display = 'block';
         photos.forEach(() => {
           document.querySelector('.desktop-photos').insertAdjacentHTML('beforeend', `<div class="desktop-photo"></div>`);
-        }); // console.log( document.querySelectorAll('div.desktop-photo'));
-
+        });
         document.querySelectorAll('div.desktop-photo').forEach((element, index) => {
           console.log(index);
           element.style.backgroundImage = `url(${photos[index]})`;
           element.dataset.number = index;
         });
-        `</div>
-                <input type="file" id="select-desktop-image">
-                <label class="select-desktop-image-label" for="select-desktop-image">Обзор</label>
-                `;
-        document.querySelector('h3.choose-pos').style.display = 'block';
-        document.getElementById('select-contain-type').style.display = 'block';
         break;
 
       case 2:
         //value = 1 - сплошной цвет                                             
         choosen.innerHTML = `
                 <h3 id="choose-color">Choose a color</h3>
-                    <div class="desktop-colors">`;
+                <div class="desktop-colors"></div>`;
         colors.forEach(element => {
           //создаем дивы
           document.querySelector('.desktop-colors').insertAdjacentHTML('beforeend', `
-                            <div class="desktop-color"></div>
-                            `);
+                    <div class="desktop-color"></div>
+                    `);
         });
-        `</div>`;
         document.querySelectorAll('div.desktop-color').forEach((item, index) => {
           //закрашиваем дивы цветами из массива
           item.style.backgroundColor = colors[index];
@@ -876,17 +1002,37 @@ const ChangeDesktopBgType = () => {
 };
 
 const changeBg = () => {
+  let newBg;
+
   if (document.getElementById('choose-photo')) {
-    let newPhoto = document.querySelector('div.desktop-photo-active').style.backgroundImage;
-    document.querySelector('main').style.backgroundColor = '';
-    document.querySelector('main').style.backgroundImage = newPhoto;
+    newBg = document.querySelector('div.desktop-photo-active').style.backgroundImage; // document.querySelector('main').style.backgroundColor = '';
+    // document.querySelector('main').style.backgroundImage = newBg;
   }
 
   if (document.getElementById('choose-color')) {
-    let newColor = document.querySelector('div.desktop-color-active').style.backgroundColor;
-    document.querySelector('main').style.backgroundImage = 'none';
-    document.querySelector('main').style.backgroundColor = newColor;
+    newBg = document.querySelector('div.desktop-color-active').style.backgroundColor; // document.querySelector('main').style.backgroundImage = 'none';
+    // document.querySelector('main').style.backgroundColor = newBg;
   }
+
+  async function saveBgToDb(bgToSave) {
+    let config = new FormData(); //если не цвет, узнаем имя картинки
+
+    if (bgToSave.split('/')[2] !== undefined) {
+      bgToSave = bgToSave.split('/')[2].slice(0, bgToSave.split('/')[2].indexOf('"'));
+    }
+
+    config.append('bg', bgToSave);
+    config.append('idUser', Object(_desktop__WEBPACK_IMPORTED_MODULE_0__["getUserInfo"])(window.location.href).id);
+    await fetch(`./../php/saveConfig.php`, {
+      method: 'POST',
+      body: config
+    }).then(res => res.json()).then(text => {
+      console.log(text);
+      Object(_desktop__WEBPACK_IMPORTED_MODULE_0__["getUserConfig"])(Object(_desktop__WEBPACK_IMPORTED_MODULE_0__["getUserInfo"])(window.location.href).id);
+    });
+  }
+
+  saveBgToDb(newBg);
 };
 
 const clearCurrentColor = elem => {
@@ -910,7 +1056,7 @@ const clearCurrentColor = elem => {
 };
 
 const SelectNewColor = () => {
-  document.querySelector('.choosen').addEventListener('click', () => {
+  document.querySelector('.choosen').addEventListener('click', event => {
     if (document.getElementById('choose-photo')) {
       console.log('Выбор фото');
 
@@ -937,6 +1083,11 @@ const SelectNewColor = () => {
     changeBg();
   });
 };
+function imageHandler() {
+  document.getElementById('select-desktop-image').addEventListener('input', event => {
+    console.log('1');
+  });
+}
 
 /***/ }),
 /* 5 */

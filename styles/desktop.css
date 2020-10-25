@@ -9,6 +9,8 @@ main
 
     display: flex;
     padding: 3px;
+
+    transition: all .4s;
 }
 
 div.desktop-wrapper

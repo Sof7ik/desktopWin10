@@ -59,7 +59,6 @@ ul.user-list
 ul.user-list li
 {
     margin-bottom: 15px;
-    padding-left: 20px;
     transition: all .3s;
 }
 
@@ -70,6 +69,7 @@ ul.user-list li:hover
 
 div.user-list-person-wrapper
 {
+    padding-left: 20px;
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
@@ -156,7 +156,7 @@ input[type="password"]:focus{
     cursor: text;
 }
 
-input[type="submit"]
+input[type="submit"]#login-btn
 {
     background-image: url('../icons/programm-icons/to-arrow white.png');
     background-repeat: no-repeat;
@@ -167,4 +167,10 @@ input[type="submit"]
     width: 30px;
 
     background-color: #6587b6;
+}
+
+p.error-message
+{
+    color: #fff;
+    margin-top: 30px;
 }

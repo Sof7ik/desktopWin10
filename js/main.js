@@ -1,6 +1,6 @@
-import { makeFileActive, checkFileTypeOnDBLClick, renderFiles } from './desktop';
+import { makeFileActive, checkFileTypeOnDBLClick, renderFiles} from './desktop';
 import { setDate, swapWinLogo } from './footer';
-import { makeDesktopContextMenu } from './context-menu'; 
+import { makeDesktopContextMenu, makeFileContextMenu } from './context-menu'; 
 
 // let value, allAudio; //тута мы будем громкость менять
 
@@ -12,13 +12,15 @@ setInterval(() =>{
 }, 1000);
 
 setDate();
-mainElement.addEventListener('click', makeFileActive);
-mainElement.addEventListener('dblclick', checkFileTypeOnDBLClick);
 
-document.querySelectorAll('*').forEach((item) =>
+document.querySelectorAll('*:not(.desktop-item)').forEach((item) =>
 {
     item.addEventListener('contextmenu', makeDesktopContextMenu)
 })
 
-swapWinLogo();
 renderFiles();
+
+mainElement.addEventListener('click', makeFileActive);
+mainElement.addEventListener('dblclick', checkFileTypeOnDBLClick);
+
+swapWinLogo();
