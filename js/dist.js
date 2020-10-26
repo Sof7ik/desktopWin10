@@ -824,7 +824,7 @@ class Program {
                 </select>
 
                 <div class="choosen">
-                    <form enctype="multipart/form-data" action="./php/files.php" method="POST">
+                    <form enctype="multipart/form-data" class="choose-form" action="./php/files.php" method="POST">
                         <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
                         <input type="file" id="select-desktop-image" name="bgImage">
                         <label class="select-desktop-image-label" for="select-desktop-image">Обзор</label>
@@ -850,6 +850,7 @@ class Program {
       event.preventDefault();
       console.log('Searching...');
     });
+    Object(_settings__WEBPACK_IMPORTED_MODULE_1__["imageHandler"])();
   } //закрытие программы
 
 
@@ -1083,9 +1084,19 @@ const SelectNewColor = () => {
     changeBg();
   });
 };
-function imageHandler() {
+async function imageHandler() {
   document.getElementById('select-desktop-image').addEventListener('input', event => {
-    console.log('1');
+    let picName = event.target.value.split('\\')[2];
+    let data = new FormData();
+    data.append('bg', picName);
+    data.append('idUser', Object(_desktop__WEBPACK_IMPORTED_MODULE_0__["getUserInfo"])(window.location.href).id);
+    setTimeout(async () => {
+      await fetch('./../php/saveConfig.php?new=True', {
+        method: 'POST',
+        body: data
+      }).then(res => res.json()).then(res => console.log(res));
+      Object(_desktop__WEBPACK_IMPORTED_MODULE_0__["getUserConfig"])(Object(_desktop__WEBPACK_IMPORTED_MODULE_0__["getUserInfo"])(window.location.href).id);
+    }, 2000);
   });
 }
 

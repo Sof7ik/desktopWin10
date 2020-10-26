@@ -369,8 +369,12 @@ div.desktop-color:hover
 
 input[type="file"]
 {
-    margin-top: 7px;
     display: none;
+}
+
+form.choose-form
+{
+    margin-top: 7px;
 }
 
 .select-desktop-image-label

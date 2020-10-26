@@ -2,7 +2,8 @@ import { clearActiveElements } from './desktop';
 
 import {
     ChangeDesktopBgType,
-    SelectNewColor
+    SelectNewColor,
+    imageHandler
 } from './settings';
 
 import { swapExplorerArrows } from './explorer';
@@ -377,7 +378,7 @@ export class Program
                 </select>
 
                 <div class="choosen">
-                    <form enctype="multipart/form-data" action="./php/files.php" method="POST">
+                    <form enctype="multipart/form-data" class="choose-form" action="./php/files.php" method="POST">
                         <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
                         <input type="file" id="select-desktop-image" name="bgImage">
                         <label class="select-desktop-image-label" for="select-desktop-image">Обзор</label>
@@ -403,6 +404,7 @@ export class Program
             event.preventDefault();
             console.log('Searching...');
         })
+        imageHandler()
     }
 
     //закрытие программы
