@@ -32,3 +32,29 @@ export const setDate = () => {
     document.querySelector('span.time').textContent = hours + ':' + minutes + ':' + seconds;
     document.querySelector('span.date').textContent = day + '.' + month + '.' + date.getFullYear();
 }
+
+document.querySelector('footer > .right-side-footer > div.tray-panel-programm.volume').addEventListener('contextmenu', (event) => {
+    
+    
+    console.log('open volume menu');
+})
+
+// let value;
+// let allAudio = document.querySelectorAll('audio');
+
+// allAudio.forEach ((itm) => {
+//     itm.volume = 0.1;
+// })
+
+// document.getElementById('cowbell').oninput = function(event)
+// {
+//     value = document.getElementById('cowbell').value;
+//     // console.log(value);
+//     document.getElementById('label-1').textContent = value;
+//     setInterval(
+//         allAudio.forEach( (item) =>
+//         {
+//             item.volume = value * 0.01;
+//         })
+//     , 1000)
+// }

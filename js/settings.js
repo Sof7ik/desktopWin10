@@ -226,18 +226,19 @@ export const SelectNewColor = () =>
 export async function imageHandler()
 {
     document.getElementById('select-desktop-image').addEventListener('input', (event) => {
-        let picName = event.target.value.split('\\')[2];
+        document.getElementById('image-submit').click();
+        // let picName = event.target.value.split('\\')[2];
 
-        let data = new FormData();
-        data.append('bg', picName);
-        data.append('idUser', getUserInfo(window.location.href).id);
+        // let data = new FormData();
+        // data.append('bg', picName);
+        // data.append('idUser', getUserInfo(window.location.href).id);
 
-        setTimeout(async () => {
-            await fetch('./../php/saveConfig.php?new=True', {
-                method: 'POST',
-                body: data
-            }).then(res => res.json()).then(res => console.log(res))
-            getUserConfig(getUserInfo(window.location.href).id)
-        }, 2000)
+        // setTimeout(async () => {
+        //     await fetch('./../php/saveConfig.php?new=True', {
+        //         method: 'POST',
+        //         body: data
+        //     }).then(res => res.json()).then(res => console.log(res))
+        //     getUserConfig(getUserInfo(window.location.href).id)
+        // }, 2000)
     })
 }

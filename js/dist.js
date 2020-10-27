@@ -103,7 +103,7 @@ setInterval(() => {
   Object(_footer__WEBPACK_IMPORTED_MODULE_1__["setDate"])();
 }, 1000);
 Object(_footer__WEBPACK_IMPORTED_MODULE_1__["setDate"])();
-document.querySelectorAll('*:not(.desktop-item)').forEach(item => {
+document.querySelectorAll('main:not(.desktop-item)').forEach(item => {
   item.addEventListener('contextmenu', _context_menu__WEBPACK_IMPORTED_MODULE_2__["makeDesktopContextMenu"]);
 });
 Object(_desktop__WEBPACK_IMPORTED_MODULE_0__["renderFiles"])();
@@ -824,12 +824,12 @@ class Program {
                 </select>
 
                 <div class="choosen">
-                    <form enctype="multipart/form-data" class="choose-form" action="./php/files.php" method="POST">
-                        <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+                    <form enctype="multipart/form-data" class="choose-form" action="./php/files.php?userId=${Object(_desktop__WEBPACK_IMPORTED_MODULE_0__["getUserInfo"])(window.location.href).id}" method="POST">
+                        <input type="hidden" name="MAX_FILE_SIZE" value="30000000" />
                         <input type="file" id="select-desktop-image" name="bgImage">
                         <label class="select-desktop-image-label" for="select-desktop-image">Обзор</label>
 
-                        <input type="submit">
+                        <input type="submit" id="image-submit">
                     </form>
                 </div>
 
@@ -1086,17 +1086,17 @@ const SelectNewColor = () => {
 };
 async function imageHandler() {
   document.getElementById('select-desktop-image').addEventListener('input', event => {
-    let picName = event.target.value.split('\\')[2];
-    let data = new FormData();
-    data.append('bg', picName);
-    data.append('idUser', Object(_desktop__WEBPACK_IMPORTED_MODULE_0__["getUserInfo"])(window.location.href).id);
-    setTimeout(async () => {
-      await fetch('./../php/saveConfig.php?new=True', {
-        method: 'POST',
-        body: data
-      }).then(res => res.json()).then(res => console.log(res));
-      Object(_desktop__WEBPACK_IMPORTED_MODULE_0__["getUserConfig"])(Object(_desktop__WEBPACK_IMPORTED_MODULE_0__["getUserInfo"])(window.location.href).id);
-    }, 2000);
+    document.getElementById('image-submit').click(); // let picName = event.target.value.split('\\')[2];
+    // let data = new FormData();
+    // data.append('bg', picName);
+    // data.append('idUser', getUserInfo(window.location.href).id);
+    // setTimeout(async () => {
+    //     await fetch('./../php/saveConfig.php?new=True', {
+    //         method: 'POST',
+    //         body: data
+    //     }).then(res => res.json()).then(res => console.log(res))
+    //     getUserConfig(getUserInfo(window.location.href).id)
+    // }, 2000)
   });
 }
 
@@ -1208,6 +1208,25 @@ const setDate = () => {
   document.querySelector('span.time').textContent = hours + ':' + minutes + ':' + seconds;
   document.querySelector('span.date').textContent = day + '.' + month + '.' + date.getFullYear();
 };
+document.querySelector('footer > .right-side-footer > div.tray-panel-programm.volume').addEventListener('contextmenu', event => {
+  console.log('open volume menu');
+}); // let value;
+// let allAudio = document.querySelectorAll('audio');
+// allAudio.forEach ((itm) => {
+//     itm.volume = 0.1;
+// })
+// document.getElementById('cowbell').oninput = function(event)
+// {
+//     value = document.getElementById('cowbell').value;
+//     // console.log(value);
+//     document.getElementById('label-1').textContent = value;
+//     setInterval(
+//         allAudio.forEach( (item) =>
+//         {
+//             item.volume = value * 0.01;
+//         })
+//     , 1000)
+// }
 
 /***/ })
 /******/ ]);

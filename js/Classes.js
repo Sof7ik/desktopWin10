@@ -1,4 +1,4 @@
-import { clearActiveElements } from './desktop';
+import { clearActiveElements, getUserInfo } from './desktop';
 
 import {
     ChangeDesktopBgType,
@@ -378,12 +378,12 @@ export class Program
                 </select>
 
                 <div class="choosen">
-                    <form enctype="multipart/form-data" class="choose-form" action="./php/files.php" method="POST">
-                        <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+                    <form enctype="multipart/form-data" class="choose-form" action="./php/files.php?userId=${getUserInfo(window.location.href).id}" method="POST">
+                        <input type="hidden" name="MAX_FILE_SIZE" value="30000000" />
                         <input type="file" id="select-desktop-image" name="bgImage">
                         <label class="select-desktop-image-label" for="select-desktop-image">Обзор</label>
 
-                        <input type="submit">
+                        <input type="submit" id="image-submit">
                     </form>
                 </div>
 

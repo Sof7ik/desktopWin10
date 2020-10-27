@@ -5,12 +5,6 @@ require_once './connection.php';
 $bg = $_POST['bg'];
 $userId = $_POST['idUser'];
 
-if (!empty($_GET['new']))
-{
-    $path = $bg . time();
-    move_uploaded_file($bg, `./../desktop-bg/{$path}`);
-}
-
 try {
     $updateQuery = mysqli_query($link, 
     "UPDATE 

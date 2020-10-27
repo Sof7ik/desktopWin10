@@ -19,7 +19,7 @@ function login(event)
     .then(unjsoned => {
         if (unjsoned !== null)
         {
-            window.location.href = `./../index.html?id=${unjsoned.userId}`;
+            window.location.href = `./../desktop.html?id=${unjsoned.userId}`;
         }
         else
         {

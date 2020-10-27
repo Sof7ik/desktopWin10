@@ -13,7 +13,7 @@ setInterval(() =>{
 
 setDate();
 
-document.querySelectorAll('*:not(.desktop-item)').forEach((item) =>
+document.querySelectorAll('main:not(.desktop-item)').forEach((item) =>
 {
     item.addEventListener('contextmenu', makeDesktopContextMenu)
 })
