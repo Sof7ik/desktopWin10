@@ -19,8 +19,11 @@ $users5 = mysqli_fetch_all(mysqli_query($link, "SELECT `login` FROM `users` LIMI
 
     <title>Вход</title>
 
-    <link rel='stylesheet' href='./styles/boot-screen.css'>
-    <link rel='stylesheet' href='./styles/style.css'>
+<!--    <link rel='stylesheet' href='styles/boot-screen.scss'>-->
+<!--    <link rel='stylesheet' href='styles/style.scss'>-->
+
+    <link rel="stylesheet" href="./dist/index.css">
+    
 </head>
 <body>
     <div class="container">
