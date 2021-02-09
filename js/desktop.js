@@ -137,7 +137,7 @@ export const checkFileTypeOnDBLClick = (event) => {
         }
 
         if (target.classList.contains('shortcut')) {
-            new Program('browser').openBrowser('https://forum.auto.ru', 'browser');
+            new Program('browser').openBrowser('https://sof7ik.github.io/metallomer.ru/', 'browser');
         }
 
         if (target.classList.contains('desktop-settings'))
