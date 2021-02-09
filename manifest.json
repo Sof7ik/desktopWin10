@@ -1,0 +1,29 @@
+{
+    "name": "Web Windows 10 - Windows 10 прямо в вашем бразуре",
+    "short_name": "WEB Windows 10",
+    "description": "Web Windows 10",
+    "lang": "ru-RU",
+    "start_url": "localhost/webWindows10/boot.html",
+    "scope": "localhost/",
+    "display": "standalone",
+    "orientation": "landscape",
+    "theme_color": "#00ACEE",
+    "icons": [
+    {
+        "src": "/apple-touch-icon.png",
+        "sizes": "180x180",
+        "type": "image/png"
+    },
+    {
+        "src": "/192x192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+    },
+    {
+        "src": "/512x512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+    }
+],
+    "background_color": "#00ACEE"
+}

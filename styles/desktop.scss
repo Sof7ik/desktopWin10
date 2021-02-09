@@ -1,0 +1,104 @@
+main
+{
+    width: 100vw;
+    /*height: 96vh;*/
+    height: calc(100vh - 40px);
+
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+
+    padding: 3px;
+
+    transition: all .4s;
+}
+
+div.desktop-wrapper
+{
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+
+div.desktop-wrapper
+{
+    display: grid;
+    grid-template-rows: repeat(10, 1fr);
+    grid-template-columns: repeat(22, 1fr);
+    grid-gap: 10px;
+
+    grid-auto-flow: column;
+
+    align-items: start;
+    justify-items: center;
+}
+
+@media all and (max-height: 1200px) {
+    div.desktop-wrapper
+    {
+        display: grid;
+        grid-template-rows: repeat(8, 1fr);
+        grid-template-columns: repeat(22, 1fr);
+        grid-gap: 10px;
+
+        grid-auto-flow: column;
+
+        align-items: start;
+        justify-items: center;
+    }
+}
+
+div.desktop-item
+{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+
+    max-width: 80px;
+    min-width: 80px;
+
+    padding: 4px;
+
+    cursor: default;
+    transition: all .4s;
+}
+
+div.active 
+{
+    outline: 1px solid grey;
+    background-color: rgba(87, 87, 87, 0.603);
+    transition: all .4s;
+}
+
+div.desktop-item:hover, div.active {
+    outline: 1px solid grey;
+    background-color: rgba(87, 87, 87, 0.603);
+    transition: all .4s;
+}
+
+img.folder, img.txt, img.shortcut, img.bin, img.settings
+{
+    width: 50px;
+    height: 50px;
+    display: block;
+}
+
+span.file-name
+{
+    font-size: 13px;
+    text-align: center;
+    color: #fff;
+    word-wrap: anywhere;
+
+    display: inline-block;
+    max-width: 100%;
+}
+
+img.folder::selection, img.txt::selection, img.shortcut::selection, img.bin::selection, span.file-name::selection
+{
+    background-color: rgba(0, 0, 0, 0);
+}
